@@ -1,0 +1,17 @@
+services:
+  eventscraper:
+    container_name: cteventsc
+    build: .
+    develop:
+      watch:
+        - action: sync
+          path: ct_event_engine
+          target: /app/ct_event_engine
+    security_opt:
+      - no-new-privileges:true
+    env_file: docker.env
+    networks:
+        - cteventengine
+
+networks:
+    cteventengine:
