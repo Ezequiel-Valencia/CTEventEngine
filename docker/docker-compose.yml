@@ -1,7 +1,9 @@
 services:
   eventscraper:
     container_name: cteventsc
-    build: .
+    build:
+      context: ../../
+      dockerfile: ./CTEventEngine/docker/Dockerfile
     develop:
       watch:
         - action: sync

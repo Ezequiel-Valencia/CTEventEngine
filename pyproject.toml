@@ -1,23 +1,27 @@
-[tool.poetry]
+[project]
 name = "ct_event_engine"
 version = "0.1.0"
 description = ""
-authors = ["Ezequiel Valencia"]
+authors = [{ name = "Ezequiel Valencia" }]
+requires-python = ">=3.10,<4"
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.10"
-requests = "^2.31.0"
-pydantic = "^2.7.0"
-tenacity = "^8.2.3"
-requests-toolbelt = "^1.0.0"
-slack_sdk = "^3.32.0"
-pytest = "^8.2.2"
-aiohttp = "^3.10.10"
-validators = "^0.34.0"
-beautifulsoup4 = "^4.13.4"
-calendar_event_engine = "0.1.4"
+dependencies = [
+    "requests>=2.31.0",
+    "pydantic>=2.7.0,<3",
+    "tenacity>=8.2.3,<9",
+    "requests-toolbelt>=1.0.0,<2",
+    "slack_sdk>=3.32.0,<4",
+    "pytest>=8.2.2,<9",
+    "aiohttp>=3.10.10,<4",
+    "validators>=0.34.0,<0.35",
+    "beautifulsoup4>=4.13.4,<5",
+    "calendar-event-engine",
+    "pytz>=2025.2",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+calendar-event-engine = { path = "../CTEventScraper" }
