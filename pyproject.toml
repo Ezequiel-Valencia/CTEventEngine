@@ -24,4 +24,4 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.uv.sources]
-calendar-event-engine = { path = "../CTEventScraper" }
+calendar-event-engine = { git = "https://github.com/Ezequiel-Valencia/EventScraper.git" }

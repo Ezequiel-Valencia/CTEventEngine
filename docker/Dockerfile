@@ -10,6 +10,7 @@ ENV CACHE_DB_PATH=/app/config
 
 RUN apt-get update
 RUN apt-get -y install software-properties-common
+RUN apt-get -y install git
 RUN python3 -m pip install uv
 
 ##################
