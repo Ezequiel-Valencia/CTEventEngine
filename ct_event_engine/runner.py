@@ -8,6 +8,7 @@ from calendar_event_engine.types.custom_scraper import CustomScraperJob
 from slack_sdk.webhook import WebhookClient
 
 from ct_event_engine.Websites.cafe9 import Cafe9Scraper
+from ct_event_engine.Websites.space_ballroom import SpaceBallroomScraper
 
 logger = logging.Logger(__name__)
 
@@ -20,7 +21,8 @@ if __name__ == "__main__":
     logger.info("Connect to DB")
     custom_scrapers = {
         MobilizonUploader(env_test_mode, cache_db) : [
-            CustomScraperJob("Cafe 9", "Music venue", Cafe9Scraper())
+            CustomScraperJob("Cafe 9", "Music venue", Cafe9Scraper()),
+            CustomScraperJob("Space Ballroom", "Music venue", SpaceBallroomScraper()),
         ]
     }
     logger.info("Engine starting.")
