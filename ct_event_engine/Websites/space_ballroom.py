@@ -66,7 +66,7 @@ class SpaceBallroomScraper(Scraper):
                 "mobilizon": {
                     "defaultCategory": EventParameters.Categories.music.value.lower(),
                     "defaultTags": ["concert", "music"],
-                    "groupID": 0  # TODO: set to the Mobilizon group ID for Space Ballroom
+                    "groupID": 26
                 }
             }
             events.append(event)
