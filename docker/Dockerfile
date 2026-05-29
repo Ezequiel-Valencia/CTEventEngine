@@ -16,11 +16,10 @@ RUN python3 -m pip install uv
 ##################
 ## Add Src Code ##
 ##################
-ADD ./CTEventEngine/ct_event_engine /app/ct_event_engine
-COPY ./CTEventEngine/pyproject.toml /app
-COPY ./CTEventEngine/README.md /app
-# Add local copy of CTEventScraper
-COPY ./CTEventScraper /CTEventScraper
+ADD ./ct_event_engine /app/ct_event_engine
+COPY ./README.md /app
+COPY ./pyproject.toml /app
+COPY ./uv.lock /app
 
 
 #################################
@@ -53,7 +52,7 @@ RUN chmod u=rx,g=rx,o=rx /app/ct_event_engine
 ######################################
 
 USER root
-ADD ./CTEventEngine/docker/entrypoint.sh /app/entrypoint.sh
+ADD ./docker/entrypoint.sh /app/entrypoint.sh
 RUN chmod u=rx,g=r,o=r /app/entrypoint.sh
 RUN set -eux; \
 	apt-get update; \
