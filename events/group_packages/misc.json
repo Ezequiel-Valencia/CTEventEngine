@@ -1,0 +1,89 @@
+{
+    "name": "Misc Package",
+    "description": "Calendars of With No Relation.",
+    "groupKernels": {
+        "Hartford Jazz Society": {
+            "calendarIDs" : ["https://calendar.google.com/calendar/ical/1323fv30pk4la63e4je86sook47avts9%40import.calendar.google.com/public/basic.ics"],
+            "calendarType": "ICAL",
+            "publisherInfo": {
+                "mobilizon": {
+                    "groupID": 17,
+                    "defaultImageID": "0e49d894-029f-4e7c-8623-e726fbae40e0",
+                    "defaultCategory": "music",
+                    "defaultTags": ["Jazz"]
+                }
+            },
+            "defaultLocation": {
+                "geom": "-72.70305527485634;41.75953661582158",
+                "locality": "Hartford",
+                "postalCode": "06106",
+                "street": "56 Arbor St",
+                "country": "United States",
+                "region": "Connecticut",
+                "timezone": "America/New_York",
+                "description": "Hartford Jazz Society"
+            },
+            "onlineAddress": "https://hartfordjazzsociety.com/"
+        },
+        "Downtown New Haven": {
+            "calendarIDs": ["3sb3oi1p84kjscr1lrpa15paavbhtrol@import.calendar.google.com"],
+            "calendarType": "GOOGLE_CAL",
+            "publisherInfo": {
+                "mobilizon": {
+                    "groupID": 19,
+                    "defaultImageID": "d6fc4cd6-9b71-43a0-ae65-f2a15a4a6d68"
+                }
+            },
+            "onlineAddress": "https://www.infonewhaven.com/"
+        },
+        "Elm City Games": {
+            "calendarIDs": ["https://calendar.google.com/calendar/ical/c_2fc67df8dc1e133f005ee39ac99fe484229ebd6d96a0e0f53fb322c2609e6b0e%40group.calendar.google.com/public/basic.ics",
+        "https://calendar.google.com/calendar/ical/c_c38a717324dce0a08588eef4ac9b6c30a2151a0adbd4be141f9e84f2b6700516%40group.calendar.google.com/public/basic.ics",
+        "https://calendar.google.com/calendar/ical/c_36efc12fbcb34811701017a04f6106b018fa9de305cac8d2877e22e3138a7dc8%40group.calendar.google.com/public/basic.ics",
+        "https://calendar.google.com/calendar/ical/c_fe0f40abce0f4fa9b355dd8841fa0005d026bd35d1152496e5677011d7dee699%40group.calendar.google.com/public/basic.ics",
+        "https://calendar.google.com/calendar/ical/c_501e2535f006ba84b5c9e7be6478db06622b38739fa72b71db9ebf536c44c1b9%40group.calendar.google.com/public/basic.ics"],
+            "calendarNames": ["Board Games", "Jigsaw Puzzles", "Magic the Gathering", "Miniature Games", "Trading Card Games"],
+            "calendarType": "ICAL",
+            "publisherInfo": {
+                "mobilizon": {
+                    "groupID": 21,
+                    "defaultImageID": "3aaf191a-31fb-4bda-b925-aa02cdd7788a",
+                    "defaultCategory": "games"
+                }
+            },
+            "defaultLocation": {
+                "geom": "-72.9247029825365;41.30471587811061",
+                "locality": "New Haven",
+                "postalCode": "06510",
+                "street": "71 Orange St",
+                "country": "United States",
+                "region": "Connecticut",
+                "timezone": "America/New_York",
+                "description": "Elm City Games"
+            },
+            "onlineAddress": "https://www.elmcitygames.com/"
+        },
+        "WBT": {
+            "note": "Disabled for now, https://calendar.google.com/calendar/ical/wbtblackbox%40gmail.com/public/basic.ics",
+            "calendarIDs": [],
+            "calendarType": "ICAL",
+            "publisherInfo": {
+                "mobilizon": {
+                    "groupID": 24,
+                    "defaultImageID": "58abf5d5-6c59-450f-b284-e4fd5215c0d1"
+                }
+            },
+            "defaultLocation": {
+                "geom": "-72.9214882248006;41.31357906228518",
+                "locality": "New Haven",
+                "postalCode": "06510",
+                "street": "105 Whitney Ave",
+                "country": "United States",
+                "region": "Connecticut",
+                "timezone": "America/New_York",
+                "description": "WBT"
+            },
+            "onlineAddress": "https://www.witchbitchthrift.com/"
+        }
+    }
+}

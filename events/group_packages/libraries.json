@@ -1,0 +1,51 @@
+{
+    "name": "Library Package",
+    "description": "Libraries in CT.",
+    "groupKernels": {
+        "New Haven Library": {
+            "calendarIDs": ["8qf27rmmeun7mat412odluuha11umbhm@import.calendar.google.com"],
+            "calendarType": "GOOGLE_CAL",
+            "publisherInfo" : {
+                "mobilizon": {
+                    "groupID": 22,
+                    "defaultImageID": "93",
+                    "defaultCategory": "family_education",
+                    "defaultTags": ["Library"]
+                }
+            },
+            "defaultLocation": {
+                "geom": "-72.9242791637932;41.30925775517219",
+                "locality": "New Haven",
+                "postalCode": "06510",
+                "street": "133 Elm St",
+                "country": "United States",
+                "region": "Connecticut",
+                "timezone": "America/New_York",
+                "description": "New Haven Free Public Library"
+            },
+            "onlineAddress": "https://nhfpl.org/"
+        },
+        "The Institute Library": {
+            "calendarIDs": ["https://calendar.google.com/calendar/ical/ke5stbpohu2nb4qh3f1r9vgci4nv5knb%40import.calendar.google.com/public/basic.ics"],
+            "calendarType": "ICAL",
+            "publisherInfo": {
+                "mobilizon": {
+                    "groupID": 20,
+                    "defaultImageID": "0a1baa69-240f-462a-b398-40e1e5f552c8",
+                    "defaultTags": ["Library"]
+                }
+            }, 
+            "defaultLocation": {
+                "geom": "-72.9246404880221;41.30598129042223",
+                "locality": "New Haven",
+                "postalCode": "06510",
+                "street": "847 Chapel St",
+                "country": "United States",
+                "region": "Connecticut",
+                "timezone": "America/New_York",
+                "description": "The Institute Library"
+            },
+            "onlineAddress": "https://institutelibrary.org/"
+        }
+    }
+}
