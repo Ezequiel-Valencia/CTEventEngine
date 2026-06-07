@@ -1,66 +1,78 @@
 {
-    "name": "Volunteer Package",
-    "description": "Calendars of groups that focus on volunteering.",
-    "groupKernels": {
-        "Save The Sound":{
-            "calendarIDs": ["https://calendar.google.com/calendar/ical/ctenvironment%40gmail.com/public/basic.ics"],
-            "calendarType": "ICAL",
-            "publisherInfo" : {
-                "mobilizon" : {
-                    "groupID": 16,
-                    "defaultImageID": "31725094-a3a7-4e9f-b12e-a0717b8c6f86",
-                    "defaultCategory": "causes",
-                    "defaultTags": ["Volunteer", "Environmentalism"]
-                }
-            },
-            "onlineAddress": "https://www.savethesound.org/",
-            "defaultTags": []
-        },
-        "Healing Meals" : {
-            "calendarIDs" : [],
-            "calendarType": "ICAL",
-            "publisherInfo": {
-                "mobilizon": {
-                    "groupID": 18,
-                    "defaultImageID": "5c2dd451-5a98-4d23-a3dc-bcab2566284c",
-                    "defaultCategory": "causes",
-                    "defaultTags": ["Volunteer"]
-                }
-            },
-            "defaultLocation": {
-                "geom": "-72.80937298908275;41.82764845622812",
-                "locality": "Simsbury",
-                "postalCode": "06070",
-                "street": "140 Nod Rd",
-                "country": "United States",
-                "region": "Connecticut",
-                "timezone": "America/New_York",
-                "description": "Healing Meals"
-            },
-            "onlineAddress": "https://healingmealsproject.org/"
-        },
-        "Bradley Street Bike Co-Op":{
-            "calendarIDs": ["https://calendar.google.com/calendar/ical/bsbc.co_c4dt5esnmutedv7p3nu01aerhk%40group.calendar.google.com/public/basic.ics"],
-            "calendarType": "ICAL",
-            "publisherInfo": {
-                "mobilizon": {
-                    "groupID": 15,
-                    "defaultImageID": "a192d1e5-20e9-44e0-9415-6488dad57fa0",
-                    "defaultCategory": "outdoors_adventure",
-                    "defaultTags": ["Volunteer", "Bikes"]
-                }
-            },
-            "defaultLocation": {
-                "geom": "-72.91659780190719;41.311977689389536",
-                "locality": "New Haven",
-                "postalCode": "06511",
-                "street": "138 Bradley St",
-                "country": "United States",
-                "region": "Connecticut",
-                "timezone": "America/New_York",
-                "description": "Bradley Street Bike Co-Op"
-            },
-            "onlineAddress": "https://bsbc.co/"
+  "name": "Volunteer Package",
+  "description": "Calendars of groups that focus on volunteering.",
+  "groupKernels": {
+    "Save The Sound": {
+      "calendarIDs": [
+        "https://calendar.google.com/calendar/ical/ctenvironment%40gmail.com/public/basic.ics"
+      ],
+      "calendarType": "ICAL",
+      "publisherInfo": {
+        "mobilizon": {
+          "groupID": 16,
+          "defaultImageID": "31725094-a3a7-4e9f-b12e-a0717b8c6f86",
+          "defaultCategory": "causes",
+          "defaultTags": [
+            "Volunteer",
+            "Environmentalism"
+          ]
         }
+      },
+      "onlineAddress": "https://www.savethesound.org/",
+      "defaultTags": []
+    },
+    "Healing Meals": {
+      "calendarIDs": [],
+      "calendarType": "ICAL",
+      "publisherInfo": {
+        "mobilizon": {
+          "groupID": 18,
+          "defaultImageID": "5c2dd451-5a98-4d23-a3dc-bcab2566284c",
+          "defaultCategory": "causes",
+          "defaultTags": [
+            "Volunteer"
+          ]
+        }
+      },
+      "defaultLocation": {
+        "geom": "-72.80937298908275;41.82764845622812",
+        "locality": "Simsbury",
+        "postalCode": "06070",
+        "street": "140 Nod Rd",
+        "country": "United States",
+        "region": "Connecticut",
+        "timezone": "America/New_York",
+        "description": "Healing Meals"
+      },
+      "onlineAddress": "https://healingmealsproject.org/"
+    },
+    "Bradley Street Bike Co-Op": {
+      "calendarIDs": [
+        "https://calendar.google.com/calendar/ical/bsbc.co_c4dt5esnmutedv7p3nu01aerhk%40group.calendar.google.com/public/basic.ics"
+      ],
+      "calendarType": "ICAL",
+      "publisherInfo": {
+        "mobilizon": {
+          "groupID": 15,
+          "defaultImageID": "a192d1e5-20e9-44e0-9415-6488dad57fa0",
+          "defaultCategory": "outdoors_adventure",
+          "defaultTags": [
+            "Volunteer",
+            "Bikes"
+          ]
+        }
+      },
+      "defaultLocation": {
+        "geom": "-72.91659780190719;41.311977689389536",
+        "locality": "New Haven",
+        "postalCode": "06511",
+        "street": "138 Bradley St",
+        "country": "United States",
+        "region": "Connecticut",
+        "timezone": "America/New_York",
+        "description": "Bradley Street Bike Co-Op"
+      },
+      "onlineAddress": "https://bsbc.co/"
     }
+  }
 }

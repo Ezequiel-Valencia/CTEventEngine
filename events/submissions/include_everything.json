@@ -1,8 +1,8 @@
 {
-    "Mobilizon": [
-      "https://raw.githubusercontent.com/Ezequiel-Valencia/CTEventEngine/refs/heads/main/events/group_packages/libraries.json",
-      "https://raw.githubusercontent.com/Ezequiel-Valencia/CTEventEngine/refs/heads/main/events/group_packages/misc.json",
-      "https://raw.githubusercontent.com/Ezequiel-Valencia/CTEventEngine/refs/heads/main/events/group_packages/farmers_market.json",
-      "https://raw.githubusercontent.com/Ezequiel-Valencia/CTEventEngine/refs/heads/main/events/group_packages/volunteer.json"
-    ]
+  "Mobilizon": [
+    "https://raw.githubusercontent.com/Ezequiel-Valencia/CTEventEngine/refs/heads/main/events/group_packages/libraries.json",
+    "https://raw.githubusercontent.com/Ezequiel-Valencia/CTEventEngine/refs/heads/main/events/group_packages/misc.json",
+    "https://raw.githubusercontent.com/Ezequiel-Valencia/CTEventEngine/refs/heads/main/events/group_packages/farmers_market.json",
+    "https://raw.githubusercontent.com/Ezequiel-Valencia/CTEventEngine/refs/heads/main/events/group_packages/volunteer.json"
+  ]
 }

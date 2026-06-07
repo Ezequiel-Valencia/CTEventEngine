@@ -1,26 +1,30 @@
 {
-    "Hartford Jazz Society": {
-        "reason": "There are to many events that flood my website, crowding out all other events. Plus they don't have flyers for their events.",
-        "calendarIDs" : ["https://calendar.google.com/calendar/ical/1323fv30pk4la63e4je86sook47avts9%40import.calendar.google.com/public/basic.ics"],
-        "calendarType": "ICAL",
-        "publisherInfo": {
-            "mobilizon": {
-                "groupID": 17,
-                "defaultImageID": "0e49d894-029f-4e7c-8623-e726fbae40e0",
-                "defaultCategory": "music",
-                "defaultTags": ["Jazz"]
-            }
-        },
-        "defaultLocation": {
-            "geom": "-72.70305527485634;41.75953661582158",
-            "locality": "Hartford",
-            "postalCode": "06106",
-            "street": "56 Arbor St",
-            "country": "United States",
-            "region": "Connecticut",
-            "timezone": "America/New_York",
-            "description": "Hartford Jazz Society"
-        },
-        "onlineAddress": "https://hartfordjazzsociety.com/"
-    }
+  "Hartford Jazz Society": {
+    "reason": "There are to many events that flood my website, crowding out all other events. Plus they don't have flyers for their events.",
+    "calendarIDs": [
+      "https://calendar.google.com/calendar/ical/1323fv30pk4la63e4je86sook47avts9%40import.calendar.google.com/public/basic.ics"
+    ],
+    "calendarType": "ICAL",
+    "publisherInfo": {
+      "mobilizon": {
+        "groupID": 17,
+        "defaultImageID": "0e49d894-029f-4e7c-8623-e726fbae40e0",
+        "defaultCategory": "music",
+        "defaultTags": [
+          "Jazz"
+        ]
+      }
+    },
+    "defaultLocation": {
+      "geom": "-72.70305527485634;41.75953661582158",
+      "locality": "Hartford",
+      "postalCode": "06106",
+      "street": "56 Arbor St",
+      "country": "United States",
+      "region": "Connecticut",
+      "timezone": "America/New_York",
+      "description": "Hartford Jazz Society"
+    },
+    "onlineAddress": "https://hartfordjazzsociety.com/"
+  }
 }

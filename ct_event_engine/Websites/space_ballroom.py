@@ -3,7 +3,11 @@ from bs4 import BeautifulSoup
 from calendar_event_engine.publishers.mobilizon.types import EventParameters
 from calendar_event_engine.scrapers.abc_scraper import Scraper
 from calendar_event_engine.types.generics import GenericEvent, GenericAddress
-from calendar_event_engine.types.submission import GroupEventsKernel, ScraperTypes, AllEventsFromAGroup
+from calendar_event_engine.types.submission import (
+    GroupEventsKernel,
+    ScraperTypes,
+    AllEventsFromAGroup,
+)
 
 from ct_event_engine.Websites.utils import get_eventbrite_event
 from ct_event_engine.logger import create_logger_from_designated_logger
@@ -16,9 +20,11 @@ MAX_ARTICLES = 10
 class SpaceBallroomScraper(Scraper):
     url = "https://spaceballroom.com"
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    group_kernel = GroupEventsKernel(None, "Space Ballroom", [url], ScraperTypes.CUSTOM, "")
+    group_kernel = GroupEventsKernel(
+        None, "Space Ballroom", [url], ScraperTypes.CUSTOM, ""
+    )
 
     def connect_to_source(self):
         pass
@@ -29,20 +35,28 @@ class SpaceBallroomScraper(Scraper):
     def get_source_type(self):
         pass
 
-    def retrieve_from_source(self, event_kernel) -> list[AllEventsFromAGroup]:
+    def retrieve_from_source(
+        self, event_kernel: GroupEventsKernel | None = None
+    ) -> list[AllEventsFromAGroup]:
         logger.info("Getting Events From Space Ballroom")
-        response = requests.get(SpaceBallroomScraper.url, headers=SpaceBallroomScraper.headers)
+        response = requests.get(
+            SpaceBallroomScraper.url, headers=SpaceBallroomScraper.headers
+        )
         response.raise_for_status()
 
-        soup = BeautifulSoup(response.text, 'html.parser')
+        soup = BeautifulSoup(response.text, "html.parser")
         events: list[GenericEvent] = []
 
-        wfea_section = soup.select_one('section.wfea')
+        wfea_section = soup.select_one("section.wfea")
         if not wfea_section:
             logger.warning("Could not find .wfea section on Space Ballroom homepage")
-            return [AllEventsFromAGroup(events, SpaceBallroomScraper.group_kernel, SpaceBallroomScraper.url)]
+            return [
+                AllEventsFromAGroup(
+                    events, SpaceBallroomScraper.group_kernel, SpaceBallroomScraper.url
+                )
+            ]
 
-        articles = wfea_section.find_all('article')[:MAX_ARTICLES]
+        articles = wfea_section.find_all("article")[:MAX_ARTICLES]
         logger.info(f"Found {len(articles)} articles to process")
 
         for article in articles:
@@ -60,23 +74,27 @@ class SpaceBallroomScraper(Scraper):
                 locality="Hamden",
                 postalCode="06514",
                 street="295 Treadwell St",
-                region="CT"
+                region="CT",
             )
             event.publisher_specific_info = {
                 "mobilizon": {
                     "defaultCategory": EventParameters.Categories.music.value.lower(),
                     "defaultTags": ["concert", "music"],
-                    "groupID": 26
+                    "groupID": 26,
                 }
             }
             events.append(event)
 
-        return [AllEventsFromAGroup(events, SpaceBallroomScraper.group_kernel, SpaceBallroomScraper.url)]
+        return [
+            AllEventsFromAGroup(
+                events, SpaceBallroomScraper.group_kernel, SpaceBallroomScraper.url
+            )
+        ]
 
     def _find_eventbrite_link(self, article) -> str | None:
-        for a_tag in article.find_all('a', href=True):
-            href = a_tag['href']
+        for a_tag in article.find_all("a", href=True):
+            href = a_tag["href"]
             text = a_tag.get_text(strip=True).upper()
-            if 'eventbrite' in href.lower() or text == 'TICKETS':
+            if "eventbrite" in href.lower() or text == "TICKETS":
                 return href
         return None

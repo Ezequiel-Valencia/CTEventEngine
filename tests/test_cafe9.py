@@ -4,8 +4,6 @@ from ct_event_engine.Websites.cafe9 import Cafe9Scraper
 
 
 class TestCafe9(unittest.TestCase):
-
-
     def test_retrieve_from_source(self):
         """
         Simple test because there are no event's that stay forever where the content can be statically checked
@@ -18,5 +16,6 @@ class TestCafe9(unittest.TestCase):
             self.assertTrue(len(event.begins_on) != 0)
             self.assertTrue(len(event.title) != 0)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -16,8 +16,26 @@ dependencies = [
     "validators>=0.34.0,<0.35",
     "beautifulsoup4>=4.13.4,<5",
     "calendar-event-engine",
+    "types-pytz",
     "pytz>=2025.2",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.2.0",
+    "pre-commit>=2.20.0",
+    "tox-uv>=1.11.3",
+    "deptry>=0.23.0",
+    "mypy>=0.991",
+    "pandas-stubs",
+    "pytest-cov>=4.0.0",
+    "pytest-asyncio>=1.0.0,<2",
+    "ruff>=0.11.5",
+    "types-requests>=2.31.0",
+]
+
+[tool.mypy]
+files = ["ct_event_engine"]
 
 [build-system]
 requires = ["hatchling"]
