@@ -64,8 +64,17 @@ class Cafe9Scraper(Scraper):
         for i in range(len(second_divs_text)):
             if i == 0:
                 clean_text = second_divs_text[i].get_text(strip=True).rsplit(" ", 1)[0]
-                time = datetime.datetime.strptime(clean_text,
-                                                             '%A, %B %d, %Y at %I:%M %p')
+                time: datetime | None = None
+                potential_formats = ['%A, %B %d, %Y at %I:%M %p', '%A. %B %d, %Y at %I:%M %p']
+                for time_format in potential_formats:
+                    try:
+                        time = datetime.datetime.strptime(clean_text, time_format)
+                        break
+                    except ValueError as err:
+                        logger.warn(msg=f"Getting time did not work.", exc_info=err)
+                
+                if time is None:
+                    raise ValueError("Could not gather start time for event.")
                 event.begins_on = pytz.timezone("America/New_York").localize(time).isoformat()
             event.description += f'{second_divs_text[i].get_text()}\n'
 
