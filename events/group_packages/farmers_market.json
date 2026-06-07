@@ -137,7 +137,7 @@
             },
             "onlineAddress": "https://www.westhartfordct.gov/visit-us/gardens-farms",
             "defaultDescription": "West Hartford Farmers' Market is open from May through December in the municipal parking lot located at the corner of Arapahoe Road and LaSalle Road. The market, now in its 35th year, features fruits, vegetables, maple syrup, flowers, cheese, jam, and bread from Connecticut farms. Thank you for buying locally and supporting the Connecticut economy.",
-            "defaultTimes": [["2026-06-13T9:00:00-04:00", "2026-06-13T13:00:00-04:00"]],
+            "defaultTimes": [["2026-06-13T09:00:00-04:00", "2026-06-13T13:00:00-04:00"]],
             "startDate": "2026-06-15T00:00:00-04:00",
             "endDate": "2026-12-10T00:00:00-05:00"
         },
