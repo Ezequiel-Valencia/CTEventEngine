@@ -1,0 +1,37 @@
+{
+  "name": "Museum Package",
+  "description": "All events relating to museums.",
+  "groupKernels": {
+    "New Haven Museum": {
+      "calendarIDs": [
+        "https://calendar.google.com/calendar/ical/l5ifo63avfkipv35727sa764tk%40group.calendar.google.com/public/basic.ics"
+      ],
+      "calendarType": "ICAL",
+      "publisherInfo": {
+        "mobilizon": {
+          "groupID": 15,
+          "defaultImageID": "a192d1e5-20e9-44e0-9415-6488dad57fa0",
+          "defaultCategory": "family_education",
+          "defaultTags": [
+            "Museum"
+          ]
+        }
+      },
+      "defaultLocation": {
+        "geom": "-72.92198614858883;41.31417872765808",
+        "locality": "New Haven",
+        "postalCode": "06510",
+        "street": "114 Whitney Ave",
+        "country": "United States",
+        "region": "Connecticut",
+        "timezone": "America/New_York",
+        "description": "New Haven Museum"
+      },
+      "onlineAddress": "https://www.newhavenmuseum.org/"
+    }
+  },
+  "need_to_parse": [
+    "https://creativeartsworkshop.org/courses/",
+    "https://www.makehaven.org/"
+  ]
+}

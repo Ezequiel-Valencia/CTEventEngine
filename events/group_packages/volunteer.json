@@ -74,5 +74,8 @@
       },
       "onlineAddress": "https://bsbc.co/"
     }
-  }
+  },
+  "need_to_parse": [
+    "https://knoxhartford.org/volunteer/"
+  ]
 }

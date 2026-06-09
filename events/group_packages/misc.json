@@ -51,8 +51,9 @@
       "onlineAddress": "https://www.elmcitygames.com/"
     },
     "WBT": {
-      "note": "Disabled for now, https://calendar.google.com/calendar/ical/wbtblackbox%40gmail.com/public/basic.ics",
-      "calendarIDs": [],
+      "calendarIDs": [
+        "https://calendar.google.com/calendar/ical/wbtblackbox%40gmail.com/public/basic.ics"
+      ],
       "calendarType": "ICAL",
       "publisherInfo": {
         "mobilizon": {
@@ -72,5 +73,8 @@
       },
       "onlineAddress": "https://www.witchbitchthrift.com/"
     }
-  }
+  },
+  "need_to_parse": [
+    "https://seateaimprov.com/"
+  ]
 }

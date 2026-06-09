@@ -1,0 +1,81 @@
+{
+  "name": "Museum Package",
+  "description": "All events relating to museums.",
+  "groupKernels": {
+    "New Haven Museum": {
+      "calendarIDs": [
+        "https://calendar.google.com/calendar/ical/l5ifo63avfkipv35727sa764tk%40group.calendar.google.com/public/basic.ics"
+      ],
+      "calendarType": "ICAL",
+      "publisherInfo": {
+        "mobilizon": {
+          "groupID": 15,
+          "defaultImageID": "a192d1e5-20e9-44e0-9415-6488dad57fa0",
+          "defaultCategory": "family_education",
+          "defaultTags": [
+            "Museum"
+          ]
+        }
+      },
+      "defaultLocation": {
+        "geom": "-72.92198614858883;41.31417872765808",
+        "locality": "New Haven",
+        "postalCode": "06510",
+        "street": "114 Whitney Ave",
+        "country": "United States",
+        "region": "Connecticut",
+        "timezone": "America/New_York",
+        "description": "New Haven Museum"
+      },
+      "onlineAddress": "https://www.newhavenmuseum.org/"
+    },
+    "Yale Peabody Museum": {
+      "title": "Yale Peabody Museum",
+      "calendarIDs": [
+        "Yale Peabody"
+      ],
+      "calendarType": "STATIC",
+      "publisherInfo": {
+        "mobilizon": {
+          "groupID": 25,
+          "defaultImageID": "a6b29689-016a-4f82-a480-f623259706f4",
+          "defaultCategory": "food_drink",
+          "defaultTags": [
+            "Museum"
+          ]
+        }
+      },
+      "defaultLocation": {
+        "geom": "-72.92118196935733;41.31637775253775",
+        "locality": "New Haven",
+        "postalCode": "06511",
+        "street": "170 Whitney Ave",
+        "country": "United States",
+        "region": "Connecticut",
+        "timezone": "America/New_York",
+        "description": "Yale Peabody Museum"
+      },
+      "onlineAddress": "https://peabody.yale.edu/",
+      "defaultDescription": "The Peabody Museum has been part of Yale and New Haven for more than 150 years. In the 19th century it was the science startup of its day. We are proud to have completed a major renovation that will reinvent the Peabody for the 21st century and beyond, further establishing the Museum as a home for cutting-edge research, extraordinary education, and breathtaking exhibitions. We invite you to explore and experience this incredible transformation with us.",
+      "defaultTimes": [
+        [
+          "2026-06-13T10:00:00-04:00",
+          "2026-06-13T17:00:00-04:00"
+        ],
+        [
+          "2026-06-14T12:00:00-04:00",
+          "2026-06-14T17:00:00-04:00"
+        ]
+      ],
+      "startDate": "2026-06-13T00:00:00-04:00",
+      "endDate": "2030-11-21T00:00:00-05:00"
+    }
+  },
+  "need_to_parse": [
+    "https://beinecke.library.yale.edu/calendar",
+    "https://www.city-gallery.org/",
+    "https://www.nxthvn.com/calendar/",
+    "https://artgallery.yale.edu/",
+    "https://www.thewadsworth.org/"
+  ]
+}
