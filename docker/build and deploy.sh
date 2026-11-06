@@ -1,3 +1,8 @@
+#!/bin/sh
+set -eu
 
-docker build --no-cache -t localhost:31000/ct-event-scraper:latest -f Dockerfile ../
+# Run from the repo root so this works regardless of the caller's directory.
+cd "$(dirname "$0")/.."
+
+docker buildx build -t localhost:31000/ct-event-scraper:latest -f docker/Dockerfile .
 docker push localhost:31000/ct-event-scraper:latest
