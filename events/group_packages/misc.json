@@ -39,7 +39,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-72.9247029825365;41.30471587811061",
+        "latitude": 41.30471587811061,
+        "longitude": -72.9247029825365,
         "locality": "New Haven",
         "postalCode": "06510",
         "street": "71 Orange St",
@@ -62,7 +63,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-72.9214882248006;41.31357906228518",
+        "latitude": 41.31357906228518,
+        "longitude": -72.9214882248006,
         "locality": "New Haven",
         "postalCode": "06510",
         "street": "105 Whitney Ave",

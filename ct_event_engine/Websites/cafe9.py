@@ -28,7 +28,13 @@ class Cafe9Scraper(Scraper):
 
     url = "https://cafenine.com"
 
-    group_kernel = GroupEventsKernel(None, "Cafe 9", [url], ScraperTypes.CUSTOM, "")
+    group_kernel = GroupEventsKernel(
+        GenericEvent(publisher_specific_info={}, title="", begins_on=""),
+        "Cafe 9",
+        [url],
+        ScraperTypes.CUSTOM,
+        "",
+    )
 
     def connect_to_source(self):
         pass
@@ -57,7 +63,7 @@ class Cafe9Scraper(Scraper):
         pass
 
     def get_pages_content(self, href) -> GenericEvent:
-        event = GenericEvent.default()
+        event = GenericEvent(publisher_specific_info={}, title="", begins_on="")
         response = requests.get(Cafe9Scraper.url + href)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
@@ -96,7 +102,8 @@ class Cafe9Scraper(Scraper):
         event.title = main_div.find("h2").get_text()
         event.online_address = Cafe9Scraper.url + href
         event.physical_address = GenericAddress(
-            geom="-72.9238838019238;41.30377450753123",
+            longitude=-72.9238838019238,
+            latitude=41.30377450753123,
             locality="New Haven",
             postalCode="06510",
             street="250 State St",

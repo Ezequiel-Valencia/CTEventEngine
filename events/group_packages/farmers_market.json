@@ -18,7 +18,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-71.90182249966294;41.3420500959362",
+        "latitude": 41.3420500959362,
+        "longitude": -71.90182249966294,
         "locality": "Stonington",
         "postalCode": "06378",
         "street": "22 Bayview Ave",
@@ -55,7 +56,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-73.05572286634849;41.49080758327309",
+        "latitude": 41.49080758327309,
+        "longitude": -73.05572286634849,
         "locality": "Naugatuck",
         "postalCode": "06770",
         "street": "21 Maple St",
@@ -92,7 +94,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-73.52903985602237;41.05457207106413",
+        "latitude": 41.05457207106413,
+        "longitude": -73.52903985602237,
         "locality": "Stamford",
         "postalCode": "06901",
         "street": "130 Atlantic St",
@@ -129,7 +132,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-73.17905101778737;41.18531124358109",
+        "latitude": 41.18531124358109,
+        "longitude": -73.17905101778737,
         "locality": "Bridgeport",
         "postalCode": "06608",
         "street": "752 East Main St",
@@ -166,7 +170,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-72.74495383344147;41.75973925487368",
+        "latitude": 41.75973925487368,
+        "longitude": -72.74495383344147,
         "locality": "West Hartford",
         "postalCode": "06107",
         "street": "9 Arapahoe Rd",
@@ -203,7 +208,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-71.90182249966294;41.3420500959362",
+        "latitude": 41.3420500959362,
+        "longitude": -71.90182249966294,
         "locality": "Willimantic",
         "postalCode": "06226",
         "street": "28 Bridge St",
@@ -240,7 +246,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-72.91410063993968;41.30413896209955",
+        "latitude": 41.30413896209955,
+        "longitude": -72.91410063993968,
         "locality": "New Haven",
         "postalCode": "06511",
         "street": "511 Chapel Street",

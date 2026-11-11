@@ -18,7 +18,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-72.9242791637932;41.30925775517219",
+        "latitude": 41.30925775517219,
+        "longitude": -72.9242791637932,
         "locality": "New Haven",
         "postalCode": "06510",
         "street": "133 Elm St",
@@ -44,7 +45,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-72.9246404880221;41.30598129042223",
+        "latitude": 41.30598129042223,
+        "longitude": -72.9246404880221,
         "locality": "New Haven",
         "postalCode": "06510",
         "street": "847 Chapel St",

@@ -23,7 +23,11 @@ class SpaceBallroomScraper(Scraper):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
     group_kernel = GroupEventsKernel(
-        None, "Space Ballroom", [url], ScraperTypes.CUSTOM, ""
+        GenericEvent(publisher_specific_info={}, title="", begins_on=""),
+        "Space Ballroom",
+        [url],
+        ScraperTypes.CUSTOM,
+        "",
     )
 
     def connect_to_source(self):
@@ -70,7 +74,8 @@ class SpaceBallroomScraper(Scraper):
                 continue
 
             event.physical_address = GenericAddress(
-                geom="-72.9246;41.3718",
+                longitude=-72.9246,
+                latitude=41.3718,
                 locality="Hamden",
                 postalCode="06514",
                 street="295 Treadwell St",

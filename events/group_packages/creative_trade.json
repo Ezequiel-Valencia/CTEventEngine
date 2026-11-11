@@ -18,7 +18,8 @@
         }
       },
       "defaultLocation": {
-        "geom": "-72.92198614858883;41.31417872765808",
+        "latitude": 41.31417872765808,
+        "longitude": -72.92198614858883,
         "locality": "New Haven",
         "postalCode": "06510",
         "street": "114 Whitney Ave",

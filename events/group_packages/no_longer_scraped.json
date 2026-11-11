@@ -16,7 +16,8 @@
       }
     },
     "defaultLocation": {
-      "geom": "-72.70305527485634;41.75953661582158",
+      "latitude": 41.75953661582158,
+      "longitude": -72.70305527485634,
       "locality": "Hartford",
       "postalCode": "06106",
       "street": "56 Arbor St",

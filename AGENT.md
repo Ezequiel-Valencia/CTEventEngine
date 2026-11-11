@@ -43,7 +43,10 @@ from calendar_event_engine.types.submission import GroupEventsKernel, ScraperTyp
 class MyVenueScraper(Scraper):
     url = "https://myvenue.com"
 
-    group_kernel = GroupEventsKernel(None, "My Venue", [url], ScraperTypes.CUSTOM, "")
+    group_kernel = GroupEventsKernel(
+        GenericEvent(publisher_specific_info={}, title="", begins_on=""),
+        "My Venue", [url], ScraperTypes.CUSTOM, "",
+    )
 
     def connect_to_source(self):
         pass  # stub unless connection setup is needed
@@ -64,14 +67,15 @@ class MyVenueScraper(Scraper):
 ### 3. Populate `GenericEvent` fields
 
 ```python
-event = GenericEvent.default()
+event = GenericEvent(publisher_specific_info={}, title="", begins_on="")
 event.title = "Event Name"
 event.description = "Event description text"
 event.picture = "https://myvenue.com/path/to/flyer.jpg"  # flyer image URL
 event.begins_on = pytz.timezone("America/New_York").localize(parsed_datetime).isoformat()
 event.online_address = "https://myvenue.com/event-page"
 event.physical_address = GenericAddress(
-    geom="-72.9238838019238;41.30377450753123",  # lon;lat
+    latitude=41.30377450753123,
+    longitude=-72.9238838019238,
     locality="New Haven",
     postalCode="06510",
     street="123 Example St",

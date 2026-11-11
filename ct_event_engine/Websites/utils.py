@@ -33,7 +33,7 @@ def get_eventbrite_event(eventbrite_url: str) -> GenericEvent | None:
         return None
 
     soup = BeautifulSoup(response.text, "html.parser")
-    event = GenericEvent.default()
+    event = GenericEvent(publisher_specific_info={}, title="", begins_on="")
     event.online_address = eventbrite_url
 
     # Try JSON-LD structured data first — most reliable for title, date, image, description
@@ -67,11 +67,11 @@ def get_eventbrite_event(eventbrite_url: str) -> GenericEvent | None:
     og_image = soup.find("meta", property="og:image")
 
     if og_title:
-        event.title = og_title.get("content", "")
+        event.title = str(og_title.get("content", ""))
     if og_desc:
-        event.description = og_desc.get("content", "")
+        event.description = str(og_desc.get("content", ""))
     if og_image:
-        event.picture = og_image.get("content", "")
+        event.picture = str(og_image.get("content", ""))
 
     # Try to extract date from a <time> element
     time_el = soup.find("time", attrs={"datetime": True})
