@@ -6,32 +6,32 @@ authors = [{ name = "Ezequiel Valencia" }]
 requires-python = ">=3.11,<4"
 readme = "README.md"
 dependencies = [
-    "requests>=2.31.0",
-    "pydantic>=2.7.0,<3",
+    "requests>=2.34.2",
+    "pydantic>=2.14.3,<3",
     "tenacity>=9.2.1,<10",
     "requests-toolbelt>=1.0.0,<2",
-    "slack_sdk>=3.32.0,<4",
-    "pytest>=8.2.2,<9",
-    "aiohttp>=3.10.10,<4",
+    "slack_sdk>=3.46.0,<4",
+    "pytest>=9.2.0,<10",
+    "aiohttp>=3.14.5,<4",
     "validators>=0.36.0,<0.37",
-    "beautifulsoup4>=4.13.4,<5",
+    "beautifulsoup4>=4.15.0,<5",
     "calendar-event-engine>=0.3.0",
     "types-pytz",
-    "pytz>=2025.2",
+    "pytz>=2026.6",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=7.2.0",
-    "pre-commit>=2.20.0",
-    "tox-uv>=1.11.3",
-    "deptry>=0.23.0",
-    "mypy>=0.991",
+    "pytest>=9.2.0",
+    "pre-commit>=4.7.0",
+    "tox-uv>=1.37.7",
+    "deptry>=0.25.1",
+    "mypy>=2.4.1",
     "pandas-stubs",
-    "pytest-cov>=4.0.0",
-    "pytest-asyncio>=1.0.0,<2",
-    "ruff>=0.11.5",
-    "types-requests>=2.31.0",
+    "pytest-cov>=7.1.0",
+    "pytest-asyncio>=1.4.1,<2",
+    "ruff>=0.17.4",
+    "types-requests>=2.33.0",
 ]
 
 [tool.mypy]
