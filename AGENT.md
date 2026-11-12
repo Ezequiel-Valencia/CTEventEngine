@@ -17,10 +17,10 @@ This repository scrapes social event information from venue/event websites in Co
 ct_event_engine/
 ├── runner.py              # Entry point; registers scrapers and starts the engine
 ├── logger.py              # Logger factory
-└── Websites/              # One file per concrete scraper implementation
-    └── cafe9.py           # Scraper for cafenine.com
+└── Websites/
+    └── group_packages/    # Every custom scraper (see "Group Package Scrapers")
 tests/
-└── test_cafe9.py          # Integration tests for Cafe9Scraper
+└── group_packages/        # Offline tests replaying recorded responses
 ```
 
 ---
@@ -98,7 +98,7 @@ from ct_event_engine.Websites.myvenue import MyVenueScraper
 
 custom_scrapers = {
     MobilizonUploader(env_test_mode, cache_db): [
-        CustomScraperJob("Cafe 9", "Music venue", Cafe9Scraper()),
+        CustomScraperJob("Cafe 9", "Music venue", Cafe9Scraper(group_id=14)),
         CustomScraperJob("My Venue", "Category description", MyVenueScraper()),  # add here
     ]
 }
@@ -108,6 +108,58 @@ custom_scrapers = {
 1. Venue name (string)
 2. Venue category/description (string)
 3. Instance of the scraper class
+
+---
+
+## Group Package Scrapers
+
+For a site listed under `need_to_parse` in `events/group_packages/<package>.json`,
+first try a built-in calendar type and add it as a group kernel in that JSON:
+`ICAL`, `GOOGLE_CAL`, `RSS` (only feeds with `ev:startdate`/`xCal:dtstart`; a
+plain `pubDate` isn't an event date) or `JSON_LD` (a page whose
+`<script type="application/ld+json">` lists the events). Sea Tea Improv and
+NXTHVN are `JSON_LD` kernels; `tests/group_packages/package_kernels.py` runs a
+kernel through the engine offline so its test checks the JSON entry works.
+
+Only when none fits, write a custom scraper in the matching subfolder, with
+tests in the same layout. Reuse the engine's parsers where part of a site fits
+one (e.g. `schwarzman_center.py` reads detail pages with the JSON-LD parser):
+
+```
+ct_event_engine/Websites/group_packages/
+├── common.py        # VenueScraper base class + date/time/text helpers
+├── platforms.py     # Shared platforms (Tribe, Squarespace, Wild Apricot, rhp-events,
+│                    #   Carbonhouse, detail pages with JSON-LD, Eventbrite links)
+└── <package>/<site>.py
+tests/group_packages/
+├── http_fixtures.py         # Records/replays a scraper's HTTP responses
+├── package_kernels.py       # Runs a group package kernel through the engine
+├── scraper_test_case.py     # Shared checks every scraper test inherits
+└── <package>/test_<site>.py, <package>/fixtures/<site>/
+```
+
+A `VenueScraper` subclass sets `name`, `url`, `address`, `category`, `tags` and
+implements `scrape()`; the base class keeps events within `days_ahead` (31 days)
+and fills the Mobilizon metadata.
+
+Before writing `scrape()` by hand, check whether the site runs on a platform in
+`platforms.py`; then the venue file only sets its name, url and address. A
+venue page that links to Eventbrite events subclasses `EventbriteLinksScraper`
+(see `music/space_ballroom.py`); one whose own event pages carry JSON-LD
+subclasses `DetailPagesJsonLdScraper`. A single listing page with one element
+per event subclasses `CardListingScraper` (set `card_selector`, implement
+`card_event`). Use the helpers in `common.py` rather than repeating them:
+`text_of`/`attr_of` for elements, `og_meta` for Open Graph tags, and
+`self.upcoming(month, day, clock)` for dates written without a year (it falls
+back to the class's `default_start_time`). It takes the Mobilizon `group_id` in its
+constructor (create the group with `scripts/mobilizon_group.py`).
+
+Tests replay recorded responses, so they run offline. When a site changes,
+re-record and update the spot checks in its test:
+
+```bash
+uv run python -m tests.group_packages.http_fixtures music.webster
+```
 
 ---
 

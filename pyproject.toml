@@ -15,7 +15,7 @@ dependencies = [
     "aiohttp>=3.14.5,<4",
     "validators>=0.36.0,<0.37",
     "beautifulsoup4>=4.15.0,<5",
-    "calendar-event-engine>=0.3.0",
+    "calendar-event-engine>=0.4.0",
     "types-pytz",
     "pytz>=2026.6",
 ]

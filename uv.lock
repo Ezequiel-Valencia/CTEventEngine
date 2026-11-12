@@ -312,8 +312,8 @@ wheels = [
 
 [[package]]
 name = "calendar-event-engine"
-version = "0.3.0"
-source = { git = "https://github.com/Ezequiel-Valencia/EventScraper.git#d333d3dac8a7b9bab817d49fa016fb22ecd78aec" }
+version = "0.4.0"
+source = { git = "https://github.com/Ezequiel-Valencia/EventScraper.git#d27126b05e4b8cba0bfeffb16f43545ea966af80" }
 dependencies = [
     { name = "geopy" },
     { name = "google-api-python-client" },

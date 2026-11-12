@@ -1,0 +1,7 @@
+{
+  "recorded_at": "2026-11-12T07:51:07-05:00",
+  "responses": {
+    "https://firehouse12.com/jazz-series?format=json": "000.json",
+    "https://firehouse12.com/special-events?format=json": "001.json"
+  }
+}

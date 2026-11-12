@@ -1,0 +1,268 @@
+{
+  "events": [
+    {
+      "id": 22500,
+      "global_id": "knoxhartford.org?id=22500",
+      "global_id_lineage": [
+        "knoxhartford.org?id=22500"
+      ],
+      "author": "6",
+      "status": "publish",
+      "date": "2026-10-09 10:16:53",
+      "date_utc": "2026-10-09 14:16:53",
+      "modified": "2026-10-09 10:16:53",
+      "modified_utc": "2026-10-09 14:16:53",
+      "url": "https://knoxhartford.org/event/thebettybashcelebration/",
+      "rest_url": "https://knoxhartford.org/wp-json/tribe/events/v1/events/22500",
+      "title": "The Betty Bash: A 60th Anniversary Celebration!",
+      "description": "<h2><img fetchpriority=\"high\" decoding=\"async\" class=\"alignright wp-image-22506 size-medium\" src=\"https://knoxhartford.org/wp-content/uploads/2026/10/Betty-Bash-Socials-240x300.png\" alt=\"The Betty Bash: A 60th Anniversary Celebration\" width=\"240\" height=\"300\" srcset=\"https://knoxhartford.org/wp-content/uploads/2026/10/Betty-Bash-Socials-240x300.png 240w, https://knoxhartford.org/wp-content/uploads/2026/10/Betty-Bash-Socials-819x1024.png 819w, https://knoxhartford.org/wp-content/uploads/2026/10/Betty-Bash-Socials-768x960.png 768w, https://knoxhartford.org/wp-content/uploads/2026/10/Betty-Bash-Socials.png 1080w\" sizes=\"(max-width: 240px) 100vw, 240px\" />Join KNOX and the Betty Knox Foundation for &#8220;The Betty Bash,&#8221; a 60th anniversary celebration to honor the legacy of Betty Knox and the decades spent supporting green spaces, farmers, and environmental education programs!</h2>\n<h4>Hors d&#8217;Oeuvres, wine, beer, and non-alcoholic beverages will be served. Complimentary carousel rides will be available!</h4>\n<p><strong>Date</strong>: Thursday, November 12, 2026</p>\n<p><strong>Time</strong>: 5 pm to 7 pm</p>\n<p><strong>Location</strong>: The Bushnell Park Carousel (1 Jewell Street, Hartford, CT)</p>\n<p>Free community event, all are welcome</p>\n<p><strong><a href=\"https://wl.donorperfect.net/weblink/WebLink.aspx?name=E351653&amp;id=136\" target=\"_blank\" rel=\"noopener\">Click here to RSVP!</a></strong></p>\n<h2>Our History:</h2>\n<p>City Councilwoman Betty Knox founded KNOX in 1966, when she established a trust fund to help improve her hometown of Hartford, CT. At that time, two areas of focus were established:</p>\n<ol>\n<li>funding community development</li>\n<li>operating \u201cgreening\u201d programs</li>\n</ol>\n<p>In 1976, the organization restructured with KNOX continuing to lead programs to conserve and strengthen the city of Hartford and the Betty Knox Foundation providing grants to support Hartford residents.</p>\n<p>KNOX continues to be an ever-growing coalition of residents, volunteers, corporate partners, and community organizations that support Hartford\u2019s people and place with impactful programs, services, and events. The Betty Knox Foundation continues to promote the vitality of Hartford by making small grants to community non-profit organizations that are working to address Hartford\u2019s most pressing social, economic and cultural needs.</p>\n<h2>A Bit About Betty:</h2>\n<p>Betty Knox was born in Hartford on November 1, 1908 and died in 1966 at the age of 57.</p>\n<p>As an engaged participant in Hartford\u2019s civic and political life, Elizabeth \u201cBetty\u201d Knox served six terms on Hartford\u2019s City Council. Her commitment to urban renewal, parks, housing and the well-being of Hartford\u2019s young residents was the driving influence of her personal, political and professional life.</p>\n<p>She was active in the Hartford League of Women Voters and and fought for residential zoning protection, city playgrounds and concerts in the parks. During World War II, she opened a day-care center for working mothers. Betty\u2019s generosity helped establish the Betty Knox apartments near St. Francis, bring the Bushnell Park carousel downtown and create 20 community gardens.</p>\n<p>We are honored to continue the legacy of such a strong leader!</p>",
+      "excerpt": "",
+      "slug": "thebettybashcelebration",
+      "image": false,
+      "all_day": false,
+      "start_date": "2026-11-12 17:00:00",
+      "start_date_details": {
+        "year": "2026",
+        "month": "11",
+        "day": "12",
+        "hour": "17",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "end_date": "2026-11-12 19:00:00",
+      "end_date_details": {
+        "year": "2026",
+        "month": "11",
+        "day": "12",
+        "hour": "19",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-11-12 21:00:00",
+      "utc_start_date_details": {
+        "year": "2026",
+        "month": "11",
+        "day": "12",
+        "hour": "21",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_end_date": "2026-11-12 23:00:00",
+      "utc_end_date_details": {
+        "year": "2026",
+        "month": "11",
+        "day": "12",
+        "hour": "23",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "timezone": "UTC-4",
+      "timezone_abbr": "UTC-4",
+      "cost": "Free",
+      "cost_details": {
+        "currency_symbol": "$",
+        "currency_code": "USD",
+        "currency_position": "prefix",
+        "values": [
+          "0"
+        ]
+      },
+      "website": "https://wl.donorperfect.net/weblink/WebLink.aspx?name=E351653&amp;id=136",
+      "show_map": true,
+      "show_map_link": true,
+      "hide_from_listings": false,
+      "sticky": false,
+      "featured": false,
+      "categories": [],
+      "tags": [],
+      "venue": {
+        "id": 22502,
+        "author": "6",
+        "status": "publish",
+        "date": "2026-10-09 08:42:26",
+        "date_utc": "0000-00-00 00:00:00",
+        "modified": "2026-10-09 08:42:26",
+        "modified_utc": "0000-00-00 00:00:00",
+        "url": "https://knoxhartford.org/venue/bushnell-park-carousel/",
+        "venue": "Bushnell Park Carousel",
+        "slug": "bushnell-park-carousel",
+        "address": "1 Jewell Street",
+        "city": "Hartford",
+        "country": "United States",
+        "state": "CT",
+        "zip": "06103",
+        "stateprovince": "CT",
+        "show_map": true,
+        "show_map_link": true,
+        "global_id": "knoxhartford.org?id=22502",
+        "global_id_lineage": [
+          "knoxhartford.org?id=22502"
+        ]
+      },
+      "organizer": [
+        {
+          "id": 22048,
+          "author": "2",
+          "status": "publish",
+          "date": "2024-12-10 17:37:14",
+          "date_utc": "2024-12-10 21:37:14",
+          "modified": "2025-04-28 09:53:02",
+          "modified_utc": "2025-04-28 13:53:02",
+          "url": "https://knoxhartford.org/organizer/knox-inc/",
+          "organizer": "KNOX, Inc.",
+          "slug": "knox-inc",
+          "phone": "860-951-7244 x 127",
+          "website": "https://knoxhartford.org",
+          "email": "lindsayw@knoxhartford.org",
+          "global_id": "knoxhartford.org?id=22048",
+          "global_id_lineage": [
+            "knoxhartford.org?id=22048"
+          ]
+        },
+        {
+          "id": 22503,
+          "author": "6",
+          "status": "publish",
+          "date": "2026-10-09 08:42:26",
+          "date_utc": "0000-00-00 00:00:00",
+          "modified": "2026-10-09 08:42:26",
+          "modified_utc": "0000-00-00 00:00:00",
+          "url": "https://knoxhartford.org/organizer/the-betty-knox-foundation/",
+          "organizer": "The Betty Knox Foundation",
+          "slug": "the-betty-knox-foundation",
+          "global_id": "knoxhartford.org?id=22503",
+          "global_id_lineage": [
+            "knoxhartford.org?id=22503"
+          ]
+        }
+      ],
+      "custom_fields": []
+    },
+    {
+      "id": 22488,
+      "global_id": "knoxhartford.org?id=22488",
+      "global_id_lineage": [
+        "knoxhartford.org?id=22488"
+      ],
+      "author": "6",
+      "status": "publish",
+      "date": "2026-10-08 13:26:06",
+      "date_utc": "2026-10-08 17:26:06",
+      "modified": "2026-10-09 10:27:23",
+      "modified_utc": "2026-10-09 14:27:23",
+      "url": "https://knoxhartford.org/event/knox-harvest-market-2026/",
+      "rest_url": "https://knoxhartford.org/wp-json/tribe/events/v1/events/22488",
+      "title": "KNOX Harvest Market",
+      "description": "<div class=\"elementor-element elementor-element-6a5a391 elementor-widget elementor-widget-text-editor\" data-id=\"6a5a391\" data-element_type=\"widget\" data-e-type=\"widget\" data-widget_type=\"text-editor.default\">\n<div class=\"elementor-widget-container\">\n<h4><img decoding=\"async\" class=\"alignright wp-image-22490 size-medium\" src=\"https://knoxhartford.org/wp-content/uploads/2026/10/Screenshot-2026-10-08-125402-300x197.png\" alt=\"Past Harvest Market\" width=\"300\" height=\"197\" srcset=\"https://knoxhartford.org/wp-content/uploads/2026/10/Screenshot-2026-10-08-125402-300x197.png 300w, https://knoxhartford.org/wp-content/uploads/2026/10/Screenshot-2026-10-08-125402.png 700w\" sizes=\"(max-width: 300px) 100vw, 300px\" />The air is crisp and the foliage is bright and beautiful &#8211; which means it&#8217;s time to announce that <strong>the KNOX Harvest Market is on Saturday, November 21st!</strong></h4>\n</div>\n<p>From 10 am to 2 pm, KNOX&#8217;s greenhouse will be bustling with local merchants, all ready to help you fulfill your needs for a cozy fall and holiday season.</p>\n<div class=\"elementor-widget-container\">\n<p>Our 17th annual market will feature tasty food, music, and all sorts of vendors. This end of season celebration serves as a way for our farmers to sell their product alongside other small businesses and local artists. Join us again this year for our KNOX Harvest Market!</p>\n</div>\n<p>Interested in becoming a vendor? We&#8217;re looking for food and beverage vendors, as well as local artists and makers! <a href=\"https://wl.donorperfect.net/weblink/WebLink.aspx?name=E351653&amp;id=138\" target=\"_blank\" rel=\"noopener\">Click here to fill out the vendor form.</a></p>\n</div>",
+      "excerpt": "",
+      "slug": "knox-harvest-market-2026",
+      "image": false,
+      "all_day": false,
+      "start_date": "2026-11-21 10:00:00",
+      "start_date_details": {
+        "year": "2026",
+        "month": "11",
+        "day": "21",
+        "hour": "10",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "end_date": "2026-11-21 14:00:00",
+      "end_date_details": {
+        "year": "2026",
+        "month": "11",
+        "day": "21",
+        "hour": "14",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-11-21 14:00:00",
+      "utc_start_date_details": {
+        "year": "2026",
+        "month": "11",
+        "day": "21",
+        "hour": "14",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_end_date": "2026-11-21 18:00:00",
+      "utc_end_date_details": {
+        "year": "2026",
+        "month": "11",
+        "day": "21",
+        "hour": "18",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "timezone": "UTC-4",
+      "timezone_abbr": "UTC-4",
+      "cost": "",
+      "cost_details": {
+        "currency_symbol": "$",
+        "currency_code": "USD",
+        "currency_position": "prefix",
+        "values": []
+      },
+      "website": "knoxhartford.org",
+      "show_map": true,
+      "show_map_link": true,
+      "hide_from_listings": false,
+      "sticky": false,
+      "featured": false,
+      "categories": [],
+      "tags": [],
+      "venue": {
+        "id": 22071,
+        "author": "5",
+        "status": "publish",
+        "date": "2024-12-31 11:47:11",
+        "date_utc": "2024-12-31 15:47:11",
+        "modified": "2024-12-31 11:47:11",
+        "modified_utc": "2024-12-31 15:47:11",
+        "url": "https://knoxhartford.org/venue/knox-headquarters/",
+        "venue": "KNOX Headquarters",
+        "slug": "knox-headquarters",
+        "address": "75 Laurel St",
+        "city": "Hartford",
+        "country": "United States",
+        "province": "CT",
+        "state": "CT",
+        "zip": "06106",
+        "phone": "8609517694",
+        "website": "https://knoxhartford.org/",
+        "stateprovince": "CT",
+        "show_map": false,
+        "show_map_link": false,
+        "global_id": "knoxhartford.org?id=22071",
+        "global_id_lineage": [
+          "knoxhartford.org?id=22071"
+        ]
+      },
+      "organizer": [
+        {
+          "id": 22048,
+          "author": "2",
+          "status": "publish",
+          "date": "2024-12-10 17:37:14",
+          "date_utc": "2024-12-10 21:37:14",
+          "modified": "2025-04-28 09:53:02",
+          "modified_utc": "2025-04-28 13:53:02",
+          "url": "https://knoxhartford.org/organizer/knox-inc/",
+          "organizer": "KNOX, Inc.",
+          "slug": "knox-inc",
+          "phone": "860-951-7244 x 127",
+          "website": "https://knoxhartford.org",
+          "email": "lindsayw@knoxhartford.org",
+          "global_id": "knoxhartford.org?id=22048",
+          "global_id_lineage": [
+            "knoxhartford.org?id=22048"
+          ]
+        }
+      ],
+      "custom_fields": []
+    }
+  ],
+  "rest_url": "https://knoxhartford.org/wp-json/tribe/events/v1/events/?page=1&per_page=50&start_date=2026-11-12 00:00:00&end_date=2026-12-13 23:59:59&status=publish",
+  "total": 2,
+  "total_pages": 1
+}
