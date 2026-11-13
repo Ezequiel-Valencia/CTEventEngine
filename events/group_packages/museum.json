@@ -79,7 +79,8 @@
       "calendarType": "JSON_LD",
       "publisherInfo": {
         "mobilizon": {
-          "groupID": "TODO: create with scripts/mobilizon_group.py",
+          "groupID": 41,
+          "defaultImageID": "4785e23a-edb5-4758-9abf-9ddba9b8f0c9",
           "defaultCategory": "arts",
           "defaultTags": [
             "art",

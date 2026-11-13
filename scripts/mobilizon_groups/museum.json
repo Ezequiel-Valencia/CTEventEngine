@@ -3,12 +3,37 @@
     {
       "name": "Beinecke Rare Book & Manuscript Library",
       "groupImage": "scripts/resources/beinecke.jpg",
-      "eventImage": "scripts/resources/beinecke.jpg"
+      "eventImage": "scripts/resources/beinecke.jpg",
+      "url": "https://beinecke.library.yale.edu/",
+      "groupID": 31,
+      "defaultImageID": "70f59467-3830-4d35-b1ba-44588f2f675b",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 31,
+        "defaultImageID": "70f59467-3830-4d35-b1ba-44588f2f675b"
+      }
     },
     {
       "name": "NXTHVN",
-      "groupImage": "",
-      "eventImage": ""
+      "groupImage": "scripts/resources/nxthvn.jpg",
+      "eventImage": "scripts/resources/nxthvn.jpg",
+      "url": "https://www.nxthvn.com/",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 41,
+        "defaultImageID": "4785e23a-edb5-4758-9abf-9ddba9b8f0c9"
+      },
+      "groupID": 41,
+      "defaultImageID": "4785e23a-edb5-4758-9abf-9ddba9b8f0c9"
     }
-  ]
+  ],
+  "lastRun": {
+    "at": "2026-11-13T00:50:03+00:00",
+    "dryRun": false,
+    "force": false,
+    "groups": 2,
+    "errors": 0,
+    "skipped": 0,
+    "skippedExisting": 2
+  }
 }

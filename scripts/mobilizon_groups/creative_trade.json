@@ -3,12 +3,37 @@
     {
       "name": "Creative Arts Workshop",
       "groupImage": "scripts/resources/creative-arts-workhouse.jpg",
-      "eventImage": "scripts/resources/creative-arts-workhouse.jpg"
+      "eventImage": "scripts/resources/creative-arts-workhouse.jpg",
+      "url": "https://creativeartsworkshop.org/",
+      "groupID": 29,
+      "defaultImageID": "b28ad99f-bf27-4ba5-a4ad-b2a65ce48ebc",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 29,
+        "defaultImageID": "b28ad99f-bf27-4ba5-a4ad-b2a65ce48ebc"
+      }
     },
     {
       "name": "MakeHaven",
       "groupImage": "scripts/resources/makehaven.jpg",
-      "eventImage": "scripts/resources/makehaven.jpg"
+      "eventImage": "scripts/resources/makehaven.jpg",
+      "url": "https://www.makehaven.org/",
+      "groupID": 30,
+      "defaultImageID": "cd8e8d67-04ad-471a-a275-2458acb704f6",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 30,
+        "defaultImageID": "cd8e8d67-04ad-471a-a275-2458acb704f6"
+      }
     }
-  ]
+  ],
+  "lastRun": {
+    "at": "2026-11-13T00:50:03+00:00",
+    "dryRun": false,
+    "force": false,
+    "groups": 2,
+    "errors": 0,
+    "skipped": 0,
+    "skippedExisting": 2
+  }
 }

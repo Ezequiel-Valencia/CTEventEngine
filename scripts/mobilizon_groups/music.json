@@ -4,48 +4,115 @@
       "name": "Cafe 9",
       "groupImage": "scripts/resources/cafe9.jpg",
       "eventImage": "scripts/resources/cafe9.jpg",
+      "url": "https://cafenine.com/",
       "groupID": 14
     },
     {
       "name": "Club Vandome",
       "groupImage": "scripts/resources/vandome.jpg",
-      "eventImage": "scripts/resources/vandome.jpg"
+      "eventImage": "scripts/resources/vandome.jpg",
+      "url": "http://clubvandome.com/",
+      "groupID": 32,
+      "defaultImageID": "0db84b93-1e8f-4f59-bffa-06b753ddce1b",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 32,
+        "defaultImageID": "0db84b93-1e8f-4f59-bffa-06b753ddce1b"
+      }
     },
     {
       "name": "College Street Music Hall",
       "groupImage": "scripts/resources/college-street-music-hall.jpg",
-      "eventImage": "scripts/resources/college-street-music-hall.jpg"
+      "eventImage": "scripts/resources/college-street-music-hall.jpg",
+      "url": "https://collegestreetmusichall.com/",
+      "groupID": 33,
+      "defaultImageID": "4167b826-6412-4a62-9b49-6dfe80d540ed",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 33,
+        "defaultImageID": "4167b826-6412-4a62-9b49-6dfe80d540ed"
+      }
     },
     {
       "name": "Firehouse 12",
       "groupImage": "scripts/resources/firehouse12.jpg",
-      "eventImage": "scripts/resources/firehouse12.jpg"
+      "eventImage": "scripts/resources/firehouse12.jpg",
+      "url": "https://firehouse12.com/",
+      "groupID": 34,
+      "defaultImageID": "3c63cd34-89a4-4d26-b23e-dfc08f6583b5",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 34,
+        "defaultImageID": "3c63cd34-89a4-4d26-b23e-dfc08f6583b5"
+      }
     },
     {
       "name": "Shubert Theatre",
       "groupImage": "scripts/resources/shubert.png",
-      "eventImage": "scripts/resources/shubert.png"
+      "eventImage": "scripts/resources/shubert.png",
+      "url": "https://www.shubert.com/",
+      "groupID": 35,
+      "defaultImageID": "4254dd38-6f09-47a4-8f35-7d07cb91c080",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 35,
+        "defaultImageID": "4254dd38-6f09-47a4-8f35-7d07cb91c080"
+      }
     },
     {
       "name": "Space Ballroom",
       "groupImage": "",
       "eventImage": "",
+      "url": "https://spaceballroom.com/",
       "groupID": 26
     },
     {
       "name": "The Webster",
       "groupImage": "scripts/resources/webster.jpg",
-      "eventImage": "scripts/resources/webster.jpg"
+      "eventImage": "scripts/resources/webster.jpg",
+      "url": "https://thewebsterct.com/",
+      "groupID": 36,
+      "defaultImageID": "dab66e1e-c7fc-4adb-a44b-20d0ca84a1b6",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 36,
+        "defaultImageID": "dab66e1e-c7fc-4adb-a44b-20d0ca84a1b6"
+      }
     },
     {
       "name": "Toad's Place",
       "groupImage": "scripts/resources/toads-place.jpg",
-      "eventImage": "scripts/resources/toads-place.jpg"
+      "eventImage": "scripts/resources/toads-place.jpg",
+      "url": "https://www.toadsplace.com/",
+      "groupID": 37,
+      "defaultImageID": "33ee1755-796e-404f-a12c-08fe55557b74",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 37,
+        "defaultImageID": "33ee1755-796e-404f-a12c-08fe55557b74"
+      }
     },
     {
       "name": "Yale Schwarzman Center",
       "groupImage": "scripts/resources/shwarzman-center.jpg",
-      "eventImage": "scripts/resources/shwarzman-center.jpg"
+      "eventImage": "scripts/resources/shwarzman-center.jpg",
+      "url": "https://schwarzman.yale.edu/",
+      "groupID": 38,
+      "defaultImageID": "6f3e2b71-2475-4984-b3dc-c1ba490b0414",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 38,
+        "defaultImageID": "6f3e2b71-2475-4984-b3dc-c1ba490b0414"
+      }
     }
-  ]
+  ],
+  "lastRun": {
+    "at": "2026-11-13T00:50:03+00:00",
+    "dryRun": false,
+    "force": false,
+    "groups": 9,
+    "errors": 0,
+    "skipped": 0,
+    "skippedExisting": 9
+  }
 }

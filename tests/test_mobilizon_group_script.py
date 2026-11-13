@@ -23,8 +23,10 @@ from calendar_event_engine.publishers.mobilizon.types import (
 )
 from gql import gql
 
+import scripts.mobilizon_group as mobilizon_group_module
 from scripts.mobilizon_group import (
     GroupManager,
+    batch_files,
     load_batch,
     load_image,
     main,
@@ -32,6 +34,7 @@ from scripts.mobilizon_group import (
     run_batch,
     sync_group,
     username_from_name,
+    with_website,
 )
 
 MOBILIZON_IMAGE = "kaihuri/mobilizon:5.2.0"
@@ -42,6 +45,7 @@ FIXTURES = Path(__file__).parent / "fixtures"
 # Repository-relative paths, as a user would pass them to the script.
 GROUP_AVATAR = "tests/fixtures/group_avatar.png"
 EVENT_IMAGE = "tests/fixtures/event_default.png"
+WEBSITE = "https://venue.example.com/"
 
 DB_USER = DB_PASSWORD = DB_NAME = "mobilizon"
 BOT_EMAIL = "bot@example.com"
@@ -510,7 +514,17 @@ def _write_batch(tmp_path: Path, groups: list[dict]) -> Path:
 def test_module_batch_files_are_valid(path):
     batch = load_batch(path)
     for entry in batch["groups"]:
-        assert {"name", "groupImage", "eventImage"} <= set(entry)
+        assert {"name", "groupImage", "eventImage", "url"} <= set(entry)
+        assert entry["url"].startswith(("http://", "https://"))
+
+
+def test_with_website_appends_link_once():
+    summary = with_website("<p>Music venue</p>", WEBSITE)
+    assert summary == (
+        f'<p>Music venue</p><p>Website: <a href="{WEBSITE}">{WEBSITE}</a></p>'
+    )
+    assert with_website(summary, WEBSITE) == summary
+    assert with_website(None, WEBSITE).startswith("<p>Website: ")
 
 
 def test_load_batch_rejects_entries_without_name(tmp_path):
@@ -552,19 +566,31 @@ def test_batch_creates_then_only_updates_images(api, tmp_path):
                 "name": "Batch Venue",
                 "groupImage": GROUP_AVATAR,
                 "eventImage": EVENT_IMAGE,
+                "url": WEBSITE,
                 "summary": "Batch summary",
             },
             {"name": "Batch No Images", "groupImage": "", "eventImage": ""},
+            {
+                "name": "Batch No Url",
+                "groupImage": GROUP_AVATAR,
+                "eventImage": EVENT_IMAGE,
+            },
         ],
     )
 
     summary = run_batch(api, path)
-    assert summary["errors"] == 0 and summary["skipped"] == 1
+    assert summary["errors"] == 0 and summary["skipped"] == 2
     assert _saved(path)["lastRun"] == summary
     saved = _saved(path)["groups"]
     created, skipped = saved[0]["lastRun"], saved[1]["lastRun"]
     assert created["action"] == "sync"
     assert skipped["action"] == "skipped"
+    assert saved[2]["lastRun"]["action"] == "skipped"
+    assert "url" in saved[2]["lastRun"]["reason"]
+    assert GroupManager(api).get_group("batch_no_url") is None
+    group_summary = _group(api, "batch_venue")["summary"]
+    assert "Batch summary" in group_summary and WEBSITE in group_summary
+    saved = saved[:2]
     assert saved[0]["groupID"] == created["groupID"]
     assert saved[0]["defaultImageID"] == created["defaultImageID"]
     assert "groupID" not in saved[1]
@@ -590,6 +616,7 @@ def test_batch_creates_then_only_updates_images(api, tmp_path):
     assert updated["groupID"] == created["groupID"]
     assert updated["preferredUsername"] == "batch_venue"
     assert updated["avatarUpdated"] is True
+    assert "summaryUpdated" not in updated  # the website is already there
     assert updated["defaultImageID"] != created["defaultImageID"]
     assert updated["warnings"]
     assert entry["defaultImageID"] == updated["defaultImageID"]
@@ -603,7 +630,9 @@ def test_batch_creates_then_only_updates_images(api, tmp_path):
 
 @integration
 def test_batch_with_id_and_no_images_only_reports(api, tmp_path):
-    created = sync_group(api, "Batch Info", GROUP_AVATAR, EVENT_IMAGE)
+    created = sync_group(
+        api, "Batch Info", GROUP_AVATAR, EVENT_IMAGE, summary=with_website("", WEBSITE)
+    )
     path = _write_batch(
         tmp_path,
         [
@@ -611,6 +640,7 @@ def test_batch_with_id_and_no_images_only_reports(api, tmp_path):
                 "name": "Batch Info",
                 "groupImage": "",
                 "eventImage": "",
+                "url": WEBSITE,
                 "groupID": created["groupID"],
             }
         ],
@@ -623,6 +653,36 @@ def test_batch_with_id_and_no_images_only_reports(api, tmp_path):
 
 
 @integration
+def test_batch_force_adds_website_to_existing_description(api, tmp_path):
+    created = sync_group(
+        api, "Batch Old Summary", GROUP_AVATAR, EVENT_IMAGE, summary="Old summary"
+    )
+    path = _write_batch(
+        tmp_path,
+        [
+            {
+                "name": "Batch Old Summary",
+                "groupImage": "",
+                "eventImage": "",
+                "url": WEBSITE,
+                "groupID": created["groupID"],
+            }
+        ],
+    )
+    run_batch(api, path, force=True)
+    result = _runs(path)[0]
+    assert result["action"] == "update-images"
+    assert result["summaryUpdated"] is True
+    summary = _group(api, "batch_old_summary")["summary"]
+    assert "Old summary" in summary and WEBSITE in summary
+
+    # Running again leaves the description alone.
+    run_batch(api, path, force=True)
+    assert _runs(path)[0]["action"] == "info"
+    assert _group(api, "batch_old_summary")["summary"] == summary
+
+
+@integration
 def test_batch_dry_run_only_writes_last_run(api, tmp_path):
     existing = sync_group(api, "Batch Dry Existing", GROUP_AVATAR, EVENT_IMAGE)
     groups = [
@@ -630,11 +690,13 @@ def test_batch_dry_run_only_writes_last_run(api, tmp_path):
             "name": "Batch Dry New",
             "groupImage": GROUP_AVATAR,
             "eventImage": EVENT_IMAGE,
+            "url": WEBSITE,
         },
         {
             "name": "Batch Dry Existing",
             "groupImage": EVENT_IMAGE,
             "eventImage": "",
+            "url": WEBSITE,
             "groupID": existing["groupID"],
         },
     ]
@@ -645,8 +707,10 @@ def test_batch_dry_run_only_writes_last_run(api, tmp_path):
     saved = _saved(path)["groups"]
     new, old = saved[0]["lastRun"], saved[1]["lastRun"]
     assert new["action"] == "create" and new["dryRun"] is True
+    assert WEBSITE in new["changes"]["summary"]["to"]
     assert old["action"] == "update-images"
-    assert set(old["changes"]) == {"avatar"}
+    assert set(old["changes"]) == {"avatar", "summary"}
+    assert old["changes"]["summary"] == {"from": "", "to": f"Website: {WEBSITE}"}
     # Apart from lastRun the entries are exactly as written.
     for before, after in zip(groups, saved, strict=True):
         after.pop("lastRun")
@@ -669,11 +733,13 @@ def test_batch_records_errors_and_continues(api, tmp_path):
                 "name": "Batch Bad Image",
                 "groupImage": "tests/fixtures/missing.png",
                 "eventImage": EVENT_IMAGE,
+                "url": WEBSITE,
             },
             {
                 "name": "Batch Ok",
                 "groupImage": GROUP_AVATAR,
                 "eventImage": EVENT_IMAGE,
+                "url": WEBSITE,
             },
         ],
     )
@@ -693,7 +759,14 @@ def test_cli_batch_saves_to_file_and_prints_nothing(
     _use_shared_session(api, mobilizon_endpoint, monkeypatch)
     path = _write_batch(
         tmp_path,
-        [{"name": "CLI Batch", "groupImage": GROUP_AVATAR, "eventImage": EVENT_IMAGE}],
+        [
+            {
+                "name": "CLI Batch",
+                "groupImage": GROUP_AVATAR,
+                "eventImage": EVENT_IMAGE,
+                "url": WEBSITE,
+            }
+        ],
     )
     assert main(["--batch", str(path)]) == 0
     out, err = capsys.readouterr()
@@ -702,6 +775,75 @@ def test_cli_batch_saves_to_file_and_prints_nothing(
     entry = _saved(path)["groups"][0]
     assert entry["lastRun"]["groupID"] == entry["groupID"]
     assert int(_group(api, "cli_batch")["id"]) == entry["groupID"]
+
+
+def test_batch_files_from_file_or_folder(tmp_path):
+    (tmp_path / "b.json").write_text("{}")
+    (tmp_path / "a.json").write_text("{}")
+    (tmp_path / "notes.txt").write_text("")
+    assert batch_files(tmp_path) == [tmp_path / "a.json", tmp_path / "b.json"]
+    assert batch_files(tmp_path / "a.json") == [tmp_path / "a.json"]
+    with pytest.raises(FileNotFoundError):
+        batch_files(tmp_path / "missing.json")
+    with pytest.raises(FileNotFoundError):
+        batch_files(tmp_path / "empty")  # does not exist
+    (tmp_path / "empty").mkdir()
+    with pytest.raises(FileNotFoundError):
+        batch_files(tmp_path / "empty")
+
+
+def test_cli_batch_folder_rejects_invalid_files(tmp_path, capsys):
+    (tmp_path / "good.json").write_text(json.dumps({"groups": [{"name": "X"}]}))
+    (tmp_path / "bad.json").write_text(json.dumps({"groups": [{}]}))
+    with pytest.raises(SystemExit) as exc:
+        main(["--batch", str(tmp_path)])
+    assert exc.value.code == 2
+    assert "bad.json" in capsys.readouterr().err
+    with pytest.raises(SystemExit):
+        main(["--batch", str(tmp_path / "nothing_here")])
+
+
+def test_module_batch_folder_is_accepted():
+    assert batch_files(BATCH_DIR) == sorted(BATCH_DIR.glob("*.json"))
+
+
+@integration
+def test_cli_batch_folder_uses_one_login(
+    api, mobilizon_endpoint, monkeypatch, capsys, tmp_path
+):
+    _use_shared_session(api, mobilizon_endpoint, monkeypatch)
+    logins = []
+    shared = mobilizon_group_module.MobilizonAPI  # the session from above
+
+    def counting_client(*args):
+        logins.append(args)
+        return shared(*args)
+
+    monkeypatch.setattr("scripts.mobilizon_group.MobilizonAPI", counting_client)
+    for stem in ("folder_one", "folder_two"):
+        (tmp_path / f"{stem}.json").write_text(
+            json.dumps(
+                {
+                    "groups": [
+                        {
+                            "name": f"CLI {stem}",
+                            "groupImage": GROUP_AVATAR,
+                            "eventImage": EVENT_IMAGE,
+                            "url": WEBSITE,
+                        }
+                    ]
+                }
+            )
+        )
+    assert main(["--batch", str(tmp_path)]) == 0
+    assert len(logins) == 1
+    err = capsys.readouterr().err
+    for stem in ("folder_one", "folder_two"):
+        path = tmp_path / f"{stem}.json"
+        assert str(path) in err
+        entry = _saved(path)["groups"][0]
+        assert entry["lastRun"]["action"] == "sync"
+        assert int(_group(api, f"cli_{stem}")["id"]) == entry["groupID"]
 
 
 @integration
@@ -760,6 +902,7 @@ def test_batch_skips_entries_with_group_id_key_without_force(
                 "name": "Batch Skip New",
                 "groupImage": GROUP_AVATAR,
                 "eventImage": EVENT_IMAGE,
+                "url": WEBSITE,
             },
         ],
     )

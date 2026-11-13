@@ -3,7 +3,24 @@
     {
       "name": "KNOX Hartford",
       "groupImage": "scripts/resources/knox.jpg",
-      "eventImage": "scripts/resources/knox.jpg"
+      "eventImage": "scripts/resources/knox.jpg",
+      "url": "https://knoxhartford.org/",
+      "groupID": 39,
+      "defaultImageID": "34722d25-c3dd-453b-94a5-3c80566bae32",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 39,
+        "defaultImageID": "34722d25-c3dd-453b-94a5-3c80566bae32"
+      }
     }
-  ]
+  ],
+  "lastRun": {
+    "at": "2026-11-13T00:50:03+00:00",
+    "dryRun": false,
+    "force": false,
+    "groups": 1,
+    "errors": 0,
+    "skipped": 0,
+    "skippedExisting": 1
+  }
 }

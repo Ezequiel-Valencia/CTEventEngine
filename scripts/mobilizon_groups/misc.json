@@ -2,8 +2,25 @@
   "groups": [
     {
       "name": "Sea Tea Improv",
-      "groupImage": "",
-      "eventImage": ""
+      "groupImage": "scripts/resources/sea-tea.jpg",
+      "eventImage": "scripts/resources/sea-tea.jpg",
+      "url": "https://seateaimprov.com/",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 40,
+        "defaultImageID": "2181b6c4-6c4a-4c67-9488-0beb9acf1241"
+      },
+      "groupID": 40,
+      "defaultImageID": "2181b6c4-6c4a-4c67-9488-0beb9acf1241"
     }
-  ]
+  ],
+  "lastRun": {
+    "at": "2026-11-13T00:50:03+00:00",
+    "dryRun": false,
+    "force": false,
+    "groups": 1,
+    "errors": 0,
+    "skipped": 0,
+    "skippedExisting": 1
+  }
 }

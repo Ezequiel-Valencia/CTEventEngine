@@ -154,7 +154,9 @@ per event subclasses `CardListingScraper` (set `card_selector`, implement
 back to the class's `default_start_time`). It takes the Mobilizon `group_id` in its
 constructor (create the group with `scripts/mobilizon_group.py`; list it in its
 module's batch file `scripts/mobilizon_groups/<package>.json` and run
-`--batch` on that file to create or update all of the module's groups at once).
+`--batch` on that file to create or update all of the module's groups at once;
+`make all_groups` runs `--batch scripts/mobilizon_groups`, i.e. every module's
+file with a single login).
 
 Tests replay recorded responses, so they run offline. When a site changes,
 re-record and update the spot checks in its test:

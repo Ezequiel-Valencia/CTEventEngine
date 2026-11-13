@@ -3,7 +3,24 @@
     {
       "name": "New Haven Community Boating",
       "groupImage": "scripts/resources/canal-dock-boathouse.jpg",
-      "eventImage": "scripts/resources/canal-dock-boathouse.jpg"
+      "eventImage": "scripts/resources/canal-dock-boathouse.jpg",
+      "url": "https://www.canaldock.org/",
+      "groupID": 28,
+      "defaultImageID": "ee475112-b9b5-45d6-8fe2-ac4dce1cab7f",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 28,
+        "defaultImageID": "ee475112-b9b5-45d6-8fe2-ac4dce1cab7f"
+      }
     }
-  ]
+  ],
+  "lastRun": {
+    "at": "2026-11-13T00:50:03+00:00",
+    "dryRun": false,
+    "force": false,
+    "groups": 1,
+    "errors": 0,
+    "skipped": 0,
+    "skippedExisting": 1
+  }
 }

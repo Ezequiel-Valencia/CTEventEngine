@@ -82,7 +82,8 @@
       "calendarType": "JSON_LD",
       "publisherInfo": {
         "mobilizon": {
-          "groupID": "TODO: create with scripts/mobilizon_group.py",
+          "groupID": 40,
+          "defaultImageID": "2181b6c4-6c4a-4c67-9488-0beb9acf1241",
           "defaultCategory": "comedy",
           "defaultTags": [
             "comedy",
