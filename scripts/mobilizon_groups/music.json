@@ -1,0 +1,51 @@
+{
+  "groups": [
+    {
+      "name": "Cafe 9",
+      "groupImage": "scripts/resources/cafe9.jpg",
+      "eventImage": "scripts/resources/cafe9.jpg",
+      "groupID": 14
+    },
+    {
+      "name": "Club Vandome",
+      "groupImage": "scripts/resources/vandome.jpg",
+      "eventImage": "scripts/resources/vandome.jpg"
+    },
+    {
+      "name": "College Street Music Hall",
+      "groupImage": "scripts/resources/college-street-music-hall.jpg",
+      "eventImage": "scripts/resources/college-street-music-hall.jpg"
+    },
+    {
+      "name": "Firehouse 12",
+      "groupImage": "scripts/resources/firehouse12.jpg",
+      "eventImage": "scripts/resources/firehouse12.jpg"
+    },
+    {
+      "name": "Shubert Theatre",
+      "groupImage": "scripts/resources/shubert.png",
+      "eventImage": "scripts/resources/shubert.png"
+    },
+    {
+      "name": "Space Ballroom",
+      "groupImage": "",
+      "eventImage": "",
+      "groupID": 26
+    },
+    {
+      "name": "The Webster",
+      "groupImage": "scripts/resources/webster.jpg",
+      "eventImage": "scripts/resources/webster.jpg"
+    },
+    {
+      "name": "Toad's Place",
+      "groupImage": "scripts/resources/toads-place.jpg",
+      "eventImage": "scripts/resources/toads-place.jpg"
+    },
+    {
+      "name": "Yale Schwarzman Center",
+      "groupImage": "scripts/resources/shwarzman-center.jpg",
+      "eventImage": "scripts/resources/shwarzman-center.jpg"
+    }
+  ]
+}

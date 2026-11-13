@@ -1,0 +1,9 @@
+{
+  "groups": [
+    {
+      "name": "KNOX Hartford",
+      "groupImage": "scripts/resources/knox.jpg",
+      "eventImage": "scripts/resources/knox.jpg"
+    }
+  ]
+}

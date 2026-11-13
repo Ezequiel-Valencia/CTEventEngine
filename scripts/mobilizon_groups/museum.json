@@ -1,0 +1,14 @@
+{
+  "groups": [
+    {
+      "name": "Beinecke Rare Book & Manuscript Library",
+      "groupImage": "scripts/resources/beinecke.jpg",
+      "eventImage": "scripts/resources/beinecke.jpg"
+    },
+    {
+      "name": "NXTHVN",
+      "groupImage": "",
+      "eventImage": ""
+    }
+  ]
+}

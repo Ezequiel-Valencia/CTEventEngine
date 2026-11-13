@@ -25,9 +25,11 @@ from gql import gql
 
 from scripts.mobilizon_group import (
     GroupManager,
+    load_batch,
     load_image,
     main,
     plan_group,
+    run_batch,
     sync_group,
     username_from_name,
 )
@@ -489,3 +491,283 @@ def test_cli_search_and_dry_run_are_exclusive():
     with pytest.raises(SystemExit) as exc:
         main(["Some Venue", "--search", "--dry-run"])
     assert exc.value.code == 2
+
+
+# --------------------------------------------------------------------------- #
+# Batch files
+# --------------------------------------------------------------------------- #
+
+BATCH_DIR = Path(__file__).resolve().parent.parent / "scripts" / "mobilizon_groups"
+
+
+def _write_batch(tmp_path: Path, groups: list[dict]) -> Path:
+    path = tmp_path / "batch.json"
+    path.write_text(json.dumps({"groups": groups}))
+    return path
+
+
+@pytest.mark.parametrize("path", sorted(BATCH_DIR.glob("*.json")), ids=lambda p: p.stem)
+def test_module_batch_files_are_valid(path):
+    batch = load_batch(path)
+    for entry in batch["groups"]:
+        assert {"name", "groupImage", "eventImage"} <= set(entry)
+
+
+def test_load_batch_rejects_entries_without_name(tmp_path):
+    with pytest.raises(ValueError):
+        load_batch(_write_batch(tmp_path, [{"groupImage": GROUP_AVATAR}]))
+
+
+def test_cli_batch_rejects_name_and_images(tmp_path, capsys):
+    path = _write_batch(tmp_path, [{"name": "X"}])
+    for argv in (["X", "--batch", str(path)], ["--batch", str(path), "--search"]):
+        with pytest.raises(SystemExit) as exc:
+            main(argv)
+        assert exc.value.code == 2
+    with pytest.raises(SystemExit):
+        main(["--batch", str(path), "--group-image", GROUP_AVATAR])
+
+
+def test_cli_requires_name_without_batch(capsys):
+    with pytest.raises(SystemExit) as exc:
+        main([])
+    assert exc.value.code == 2
+    assert "NAME is required" in capsys.readouterr().err
+
+
+def _saved(path: Path) -> dict:
+    return json.loads(path.read_text())
+
+
+def _runs(path: Path) -> list[dict]:
+    return [entry["lastRun"] for entry in _saved(path)["groups"]]
+
+
+@integration
+def test_batch_creates_then_only_updates_images(api, tmp_path):
+    path = _write_batch(
+        tmp_path,
+        [
+            {
+                "name": "Batch Venue",
+                "groupImage": GROUP_AVATAR,
+                "eventImage": EVENT_IMAGE,
+                "summary": "Batch summary",
+            },
+            {"name": "Batch No Images", "groupImage": "", "eventImage": ""},
+        ],
+    )
+
+    summary = run_batch(api, path)
+    assert summary["errors"] == 0 and summary["skipped"] == 1
+    assert _saved(path)["lastRun"] == summary
+    saved = _saved(path)["groups"]
+    created, skipped = saved[0]["lastRun"], saved[1]["lastRun"]
+    assert created["action"] == "sync"
+    assert skipped["action"] == "skipped"
+    assert saved[0]["groupID"] == created["groupID"]
+    assert saved[0]["defaultImageID"] == created["defaultImageID"]
+    assert "groupID" not in saved[1]
+    assert GroupManager(api).get_group("batch_no_images") is None
+
+    # Rename the entry: with a groupID only images change, never the name.
+    saved[0]["name"] = "Batch Venue Renamed"
+    saved[0]["groupImage"] = EVENT_IMAGE
+    path.write_text(json.dumps({"groups": saved}))
+    avatar_before = _group(api, "batch_venue")["avatar"]["url"]
+
+    # Without --force an entry with a groupID is left alone.
+    before = _saved(path)["groups"][0]
+    summary = run_batch(api, path)
+    assert summary["skippedExisting"] == 1
+    assert _saved(path)["groups"][0] == before
+    assert _group(api, "batch_venue")["avatar"]["url"] == avatar_before
+
+    run_batch(api, path, force=True)
+    entry = _saved(path)["groups"][0]
+    updated = entry["lastRun"]
+    assert updated["action"] == "update-images"
+    assert updated["groupID"] == created["groupID"]
+    assert updated["preferredUsername"] == "batch_venue"
+    assert updated["avatarUpdated"] is True
+    assert updated["defaultImageID"] != created["defaultImageID"]
+    assert updated["warnings"]
+    assert entry["defaultImageID"] == updated["defaultImageID"]
+    assert entry["name"] == "Batch Venue Renamed"
+    group = _group(api, "batch_venue")
+    assert group["name"] == "Batch Venue"
+    assert group["avatar"]["url"] != avatar_before
+    assert updated["avatar"] == group["avatar"]["url"]
+    assert _admin_group_ids(api, "Batch Venue") == [created["groupID"]]
+
+
+@integration
+def test_batch_with_id_and_no_images_only_reports(api, tmp_path):
+    created = sync_group(api, "Batch Info", GROUP_AVATAR, EVENT_IMAGE)
+    path = _write_batch(
+        tmp_path,
+        [
+            {
+                "name": "Batch Info",
+                "groupImage": "",
+                "eventImage": "",
+                "groupID": created["groupID"],
+            }
+        ],
+    )
+    run_batch(api, path, force=True)
+    result = _runs(path)[0]
+    assert result["action"] == "info"
+    assert result["preferredUsername"] == "batch_info"
+    assert result["avatar"]
+
+
+@integration
+def test_batch_dry_run_only_writes_last_run(api, tmp_path):
+    existing = sync_group(api, "Batch Dry Existing", GROUP_AVATAR, EVENT_IMAGE)
+    groups = [
+        {
+            "name": "Batch Dry New",
+            "groupImage": GROUP_AVATAR,
+            "eventImage": EVENT_IMAGE,
+        },
+        {
+            "name": "Batch Dry Existing",
+            "groupImage": EVENT_IMAGE,
+            "eventImage": "",
+            "groupID": existing["groupID"],
+        },
+    ]
+    path = _write_batch(tmp_path, groups)
+
+    summary = run_batch(api, path, dry_run=True, force=True)
+    assert summary["dryRun"] is True
+    saved = _saved(path)["groups"]
+    new, old = saved[0]["lastRun"], saved[1]["lastRun"]
+    assert new["action"] == "create" and new["dryRun"] is True
+    assert old["action"] == "update-images"
+    assert set(old["changes"]) == {"avatar"}
+    # Apart from lastRun the entries are exactly as written.
+    for before, after in zip(groups, saved, strict=True):
+        after.pop("lastRun")
+        assert after == before
+    assert GroupManager(api).get_group("batch_dry_new") is None
+
+
+@integration
+def test_batch_records_errors_and_continues(api, tmp_path):
+    path = _write_batch(
+        tmp_path,
+        [
+            {
+                "name": "Batch Missing",
+                "groupImage": "",
+                "eventImage": "",
+                "groupID": 999999,
+            },
+            {
+                "name": "Batch Bad Image",
+                "groupImage": "tests/fixtures/missing.png",
+                "eventImage": EVENT_IMAGE,
+            },
+            {
+                "name": "Batch Ok",
+                "groupImage": GROUP_AVATAR,
+                "eventImage": EVENT_IMAGE,
+            },
+        ],
+    )
+    summary = run_batch(api, path, force=True)
+    runs = _runs(path)
+    assert [r["action"] for r in runs] == ["error", "error", "sync"]
+    assert "LookupError" in runs[0]["error"]
+    assert "FileNotFoundError" in runs[1]["error"]
+    assert summary["errors"] == 2
+    assert "groupID" in _saved(path)["groups"][2]
+
+
+@integration
+def test_cli_batch_saves_to_file_and_prints_nothing(
+    api, mobilizon_endpoint, monkeypatch, capsys, tmp_path
+):
+    _use_shared_session(api, mobilizon_endpoint, monkeypatch)
+    path = _write_batch(
+        tmp_path,
+        [{"name": "CLI Batch", "groupImage": GROUP_AVATAR, "eventImage": EVENT_IMAGE}],
+    )
+    assert main(["--batch", str(path)]) == 0
+    out, err = capsys.readouterr()
+    assert out == ""
+    assert str(path) in err
+    entry = _saved(path)["groups"][0]
+    assert entry["lastRun"]["groupID"] == entry["groupID"]
+    assert int(_group(api, "cli_batch")["id"]) == entry["groupID"]
+
+
+@integration
+def test_cli_batch_exit_code_on_error(
+    api, mobilizon_endpoint, monkeypatch, capsys, tmp_path
+):
+    _use_shared_session(api, mobilizon_endpoint, monkeypatch)
+    path = _write_batch(
+        tmp_path,
+        [
+            {
+                "name": "CLI Batch Bad",
+                "groupImage": "",
+                "eventImage": "",
+                "groupID": 999999,
+            }
+        ],
+    )
+    assert main(["--batch", str(path), "--force"]) == 1
+    assert "1 error(s)" in capsys.readouterr().err
+
+
+def test_cli_force_requires_batch(capsys):
+    with pytest.raises(SystemExit) as exc:
+        main(
+            [
+                "Some Venue",
+                "--group-image",
+                GROUP_AVATAR,
+                "--event-image",
+                EVENT_IMAGE,
+                "--force",
+            ]
+        )
+    assert exc.value.code == 2
+    assert "--force only applies to --batch" in capsys.readouterr().err
+
+
+@integration
+def test_batch_skips_entries_with_group_id_key_without_force(
+    api, mobilizon_endpoint, monkeypatch, capsys, tmp_path
+):
+    _use_shared_session(api, mobilizon_endpoint, monkeypatch)
+    existing = {
+        "name": "Batch Skip Existing",
+        "groupImage": GROUP_AVATAR,
+        "eventImage": EVENT_IMAGE,
+        "groupID": 999999,
+        "lastRun": {"action": "sync", "groupID": 999999},
+    }
+    path = _write_batch(
+        tmp_path,
+        [
+            existing,
+            {
+                "name": "Batch Skip New",
+                "groupImage": GROUP_AVATAR,
+                "eventImage": EVENT_IMAGE,
+            },
+        ],
+    )
+    assert main(["--batch", str(path)]) == 0
+    assert "1 with a groupID skipped; pass --force" in capsys.readouterr().err
+    saved = _saved(path)
+    assert saved["groups"][0] == existing
+    assert saved["groups"][1]["lastRun"]["action"] == "sync"
+    assert saved["lastRun"]["skippedExisting"] == 1
+    assert saved["lastRun"]["force"] is False
+    assert GroupManager(api).get_group("batch_skip_existing") is None

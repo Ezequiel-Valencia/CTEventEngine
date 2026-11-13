@@ -74,9 +74,35 @@
         "description": "WBT"
       },
       "onlineAddress": "https://www.witchbitchthrift.com/"
+    },
+    "Sea Tea Improv": {
+      "calendarIDs": [
+        "https://seateaimprov.com/calendar/"
+      ],
+      "calendarType": "JSON_LD",
+      "publisherInfo": {
+        "mobilizon": {
+          "groupID": "TODO: create with scripts/mobilizon_group.py",
+          "defaultCategory": "comedy",
+          "defaultTags": [
+            "comedy",
+            "improv"
+          ]
+        }
+      },
+      "defaultLocation": {
+        "latitude": 41.7664795,
+        "longitude": -72.6735654,
+        "locality": "Hartford",
+        "postalCode": "06103",
+        "street": "15 Asylum St",
+        "country": "United States",
+        "region": "Connecticut",
+        "timezone": "America/New_York",
+        "description": "Sea Tea Comedy Theater"
+      },
+      "onlineAddress": "https://seateaimprov.com/"
     }
   },
-  "need_to_parse": [
-    "https://seateaimprov.com/"
-  ]
+  "need_to_parse": []
 }

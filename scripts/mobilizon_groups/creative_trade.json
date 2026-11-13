@@ -1,0 +1,14 @@
+{
+  "groups": [
+    {
+      "name": "Creative Arts Workshop",
+      "groupImage": "scripts/resources/creative-arts-workhouse.jpg",
+      "eventImage": "scripts/resources/creative-arts-workhouse.jpg"
+    },
+    {
+      "name": "MakeHaven",
+      "groupImage": "scripts/resources/makehaven.jpg",
+      "eventImage": "scripts/resources/makehaven.jpg"
+    }
+  ]
+}

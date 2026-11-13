@@ -30,6 +30,25 @@ not linked to the group in Mobilizon, so search can't show it.
 The group is matched by its display name among the groups the logged-in
 identity administers. If found it is renamed/re-avatared in place, otherwise a
 new group is created. A fresh default event image is uploaded on every run.
+
+With --batch FILE, every group listed in FILE is handled in one run (NAME is
+not given). There is one batch file per scraper module in
+``scripts/mobilizon_groups/<module>.json``:
+    uv run python scripts/mobilizon_group.py --batch scripts/mobilizon_groups/music.json
+    {"groups": [{"name": "Cafe 9", "groupImage": "images/cafe9.png",
+                 "eventImage": "https://example.com/cafe9.jpg", "groupID": 14}]}
+Each entry needs ``name``, ``groupImage`` and ``eventImage``; ``username`` and
+``summary`` are optional. An entry without a ``groupID`` is created (or matched
+by name, like a single run). An entry that has a ``groupID`` key is skipped and
+left exactly as it is (including its previous ``lastRun``), unless --force is
+passed: then only its images are updated (the avatar is replaced and a new
+default event image is uploaded; an empty image value is left alone) and the
+group's details are reported. Nothing is printed: the outcome is saved into FILE instead, as a
+``lastRun`` object on each entry (action, groupID, preferredUsername, avatar,
+defaultImageID, warnings or error) plus a top-level ``lastRun`` summary. A real
+run also stores the new ``groupID``/``defaultImageID`` on each entry, so
+running the batch again skips the groups it already created. With --dry-run Mobilizon is
+untouched and only the ``lastRun`` objects (the plan) are written.
 """
 
 from __future__ import annotations
@@ -41,6 +60,7 @@ import os
 import re
 import sys
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from pathlib import Path
 
 import httpx2
@@ -169,8 +189,9 @@ class GroupManager:
                     return group
         return None
 
-    def _memberships(self, term: str) -> list[dict]:
-        """All of the bot's group memberships matching ``term`` (every page)."""
+    def _memberships(self, term: str | None) -> list[dict]:
+        """All of the bot's group memberships matching ``term`` (every page;
+        ``None`` matches every group)."""
         found: list[dict] = []
         page = 1
         while True:
@@ -234,6 +255,33 @@ class GroupManager:
             return int(data["createGroup"]["id"])
 
         variables["id"] = existing["id"]
+        data = self._multipart(UPDATE_GROUP, variables, {"avatar": avatar})
+        return int(data["updateGroup"]["id"])
+
+    def find_group_by_id(self, group_id: int) -> dict | None:
+        """The group with ``group_id`` if the bot administers it, else None."""
+        for membership in self._memberships(None):
+            group = membership["parent"]
+            if int(group["id"]) == int(group_id):
+                if membership["role"] != "ADMINISTRATOR":
+                    raise PermissionError(
+                        f"The bot is {membership['role']} of group {group_id}, "
+                        "not ADMINISTRATOR"
+                    )
+                return group
+        return None
+
+    def update_avatar(self, group_id: int, name: str, avatar: Image) -> int:
+        variables = {
+            "id": str(group_id),
+            "avatar": {
+                "media": {
+                    "name": avatar.filename,
+                    "alt": f"{name} avatar",
+                    "file": "avatar",
+                }
+            },
+        }
         data = self._multipart(UPDATE_GROUP, variables, {"avatar": avatar})
         return int(data["updateGroup"]["id"])
 
@@ -349,6 +397,149 @@ def sync_group(
     return {"groupID": group_id, "defaultImageID": image_id}
 
 
+def load_batch(path: Path) -> dict:
+    with open(path) as f:
+        batch = json.load(f)
+    groups = batch.get("groups") if isinstance(batch, dict) else None
+    if not isinstance(groups, list):
+        raise TypeError(f"{path}: expected an object with a 'groups' list")
+    for index, entry in enumerate(groups):
+        if not isinstance(entry, dict) or not entry.get("name"):
+            raise ValueError(f"{path}: groups[{index}] needs a 'name'")
+    return batch
+
+
+def save_batch(path: Path, batch: dict) -> None:
+    path.write_text(json.dumps(batch, indent=2, ensure_ascii=False) + "\n")
+
+
+def _existing_group_entry(manager: GroupManager, entry: dict, dry_run: bool) -> dict:
+    """An entry with a groupID: only its images change."""
+    name = entry["name"]
+    group_id = int(entry["groupID"])
+    group = manager.find_group_by_id(group_id)
+    if group is None:
+        raise LookupError(
+            f"Group {group_id} does not exist or the bot is not a member of it"
+        )
+    details = manager.get_group(group["preferredUsername"]) or group
+    result: dict = {
+        "name": name,
+        "action": "update-images",
+        "groupID": group_id,
+        "preferredUsername": group["preferredUsername"],
+        "groupName": details.get("name"),
+        "avatar": (details.get("avatar") or {}).get("url"),
+        "defaultImageID": entry.get("defaultImageID"),
+    }
+    if details.get("name") != name:
+        result["warnings"] = [
+            (
+                f"Group {group_id} is named {details.get('name')!r} on Mobilizon; "
+                "only images are updated for entries with a groupID."
+            )
+        ]
+    group_image, event_image = entry.get("groupImage"), entry.get("eventImage")
+    avatar = load_image(group_image) if group_image else None
+    default_image = load_image(event_image) if event_image else None
+    if dry_run:
+        result["dryRun"] = True
+        result["changes"] = {}
+        if avatar:
+            result["changes"]["avatar"] = {"from": result["avatar"], "to": group_image}
+        if default_image:
+            result["changes"]["defaultImageID"] = {
+                "from": entry.get("defaultImageID"),
+                "to": f"new upload of {event_image}",
+            }
+        return result
+    if avatar:
+        manager.update_avatar(group_id, details.get("name") or name, avatar)
+        result["avatarUpdated"] = True
+        refreshed = manager.get_group(group["preferredUsername"]) or {}
+        result["avatar"] = (refreshed.get("avatar") or {}).get("url")
+    if default_image:
+        result["defaultImageID"] = manager.upload_image(default_image, f"{name} event")
+    if not avatar and not default_image:
+        result["action"] = "info"
+    return result
+
+
+def _new_group_entry(api: MobilizonAPI, entry: dict, dry_run: bool) -> dict:
+    name = entry["name"]
+    missing = [k for k in ("groupImage", "eventImage") if not entry.get(k)]
+    if missing:
+        return {
+            "name": name,
+            "action": "skipped",
+            "reason": f"No groupID yet and missing {', '.join(missing)}",
+        }
+    args = (
+        api,
+        name,
+        entry["groupImage"],
+        entry["eventImage"],
+        entry.get("username"),
+        entry.get("summary"),
+    )
+    if dry_run:
+        return {"name": name, **plan_group(*args)}
+    return {"name": name, "action": "sync", **sync_group(*args)}
+
+
+def run_batch(
+    api: MobilizonAPI, path: Path, dry_run: bool = False, force: bool = False
+) -> dict:
+    """Create/update every group in the batch file and save the outcome in it.
+
+    Each entry gets a ``lastRun`` object with what happened to it (the same
+    details a single run prints), and the file gets a top-level ``lastRun``
+    summary. A real run also stores the new ``groupID``/``defaultImageID`` on
+    the entry; a dry run only writes ``lastRun``. The file is saved after
+    every entry, so a crash part way through doesn't lose IDs already created.
+    A failing entry is recorded and does not stop the others.
+
+    Entries with a ``groupID`` key are skipped without being touched, unless
+    ``force``, in which case their images are updated.
+
+    :return: the top-level ``lastRun`` summary.
+    """
+    batch = load_batch(path)
+    manager = GroupManager(api)
+    actions: list[str] = []
+    for entry in batch["groups"]:
+        if "groupID" in entry and not force:
+            actions.append("existing")
+            continue
+        try:
+            if entry.get("groupID") not in (None, ""):
+                result = _existing_group_entry(manager, entry, dry_run)
+            else:
+                result = _new_group_entry(api, entry, dry_run)
+        except Exception as err:  # noqa: BLE001 - recorded per entry
+            result = {"action": "error", "error": f"{type(err).__name__}: {err}"}
+        result.pop("name", None)
+        if not dry_run and result["action"] not in ("skipped", "info", "error"):
+            entry["groupID"] = result["groupID"]
+            if result.get("defaultImageID"):
+                entry["defaultImageID"] = result["defaultImageID"]
+        entry["lastRun"] = result
+        actions.append(result["action"])
+        save_batch(path, batch)
+
+    batch["lastRun"] = {
+        "at": datetime.now(UTC).isoformat(timespec="seconds"),
+        "dryRun": dry_run,
+        "force": force,
+        "groups": len(actions),
+        "errors": actions.count("error"),
+        "skipped": actions.count("skipped"),
+        "skippedExisting": actions.count("existing"),
+    }
+    save_batch(path, batch)
+    return batch["lastRun"]
+
+
 def _credentials(args: argparse.Namespace) -> tuple[str, str, str]:
     endpoint = args.endpoint or os.environ.get("MOBILIZON_ENDPOINT")
     email = args.email or os.environ.get("MOBILIZON_EMAIL")
@@ -370,8 +561,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument(
         "name",
+        nargs="?",
         help="Group display name (used to find an existing group), "
-        "or the search term with --search",
+        "or the search term with --search; omitted with --batch",
     )
     parser.add_argument("--group-image", help="Avatar: file path or URL")
     parser.add_argument("--event-image", help="Default event image: file path or URL")
@@ -382,6 +574,19 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--endpoint", help="GraphQL endpoint, e.g. https://host/api")
     parser.add_argument("--email")
     parser.add_argument("--password")
+    parser.add_argument(
+        "--batch",
+        type=Path,
+        metavar="FILE",
+        help="JSON file listing groups to create/update, e.g. "
+        "scripts/mobilizon_groups/music.json",
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="With --batch: also update the images of entries that already have "
+        "a groupID (they are skipped otherwise)",
+    )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
         "--dry-run",
@@ -394,13 +599,30 @@ def main(argv: list[str] | None = None) -> int:
         help="List the bot's groups matching NAME with their groupIDs; no changes",
     )
     args = parser.parse_args(argv)
-    if not args.search and not (args.group_image and args.event_image):
+    if args.batch:
+        if args.name or args.search:
+            parser.error("--batch takes no NAME and can't be combined with --search")
+        if args.group_image or args.event_image or args.username or args.summary:
+            parser.error("--batch reads images, username and summary from FILE")
+        if not args.batch.is_file():
+            parser.error(f"batch file not found: {args.batch}")
+        try:
+            load_batch(args.batch)
+        except (TypeError, ValueError) as err:
+            parser.error(str(err))
+    elif args.force:
+        parser.error("--force only applies to --batch")
+    elif not args.name:
+        parser.error("NAME is required unless --batch")
+    elif not args.search and not (args.group_image and args.event_image):
         parser.error("--group-image and --event-image are required unless --search")
 
     api = MobilizonAPI(*_credentials(args))
     try:
-        if args.search:
-            result: dict = {
+        if args.batch:
+            result: dict = run_batch(api, args.batch, args.dry_run, args.force)
+        elif args.search:
+            result = {
                 "search": args.name,
                 "groups": GroupManager(api).search_groups(args.name),
             }
@@ -419,6 +641,16 @@ def main(argv: list[str] | None = None) -> int:
         except (httpx2.HTTPError, TransportError) as err:
             # The access token expires on its own; nothing else to clean up.
             print(f"Warning: unable to log out of Mobilizon: {err}", file=sys.stderr)
+    if args.batch:
+        # The details are in the batch file; only say where they went.
+        print(
+            f"Saved results for {result['groups']} group(s) to {args.batch} "
+            f"({result['errors']} error(s), {result['skipped']} skipped, "
+            f"{result['skippedExisting']} with a groupID skipped"
+            f"{'' if args.force else '; pass --force to update them'})",
+            file=sys.stderr,
+        )
+        return 1 if result["errors"] else 0
     pretty = args.dry_run or args.search
     print(json.dumps(result, indent=2) if pretty else json.dumps(result))
     return 0

@@ -152,7 +152,9 @@ per event subclasses `CardListingScraper` (set `card_selector`, implement
 `text_of`/`attr_of` for elements, `og_meta` for Open Graph tags, and
 `self.upcoming(month, day, clock)` for dates written without a year (it falls
 back to the class's `default_start_time`). It takes the Mobilizon `group_id` in its
-constructor (create the group with `scripts/mobilizon_group.py`).
+constructor (create the group with `scripts/mobilizon_group.py`; list it in its
+module's batch file `scripts/mobilizon_groups/<package>.json` and run
+`--batch` on that file to create or update all of the module's groups at once).
 
 Tests replay recorded responses, so they run offline. When a site changes,
 re-record and update the spot checks in its test:

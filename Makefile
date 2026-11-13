@@ -18,3 +18,12 @@ test: ## Test the code with pytest
 docker_build_and_deploy:
 	@echo "Building docker image and deploying it to K8 registry."
 	@./docker/build\ and\ deploy.sh
+
+.PHONY: all_groups
+all_groups: ## Create/update the Mobilizon groups in every scripts/mobilizon_groups/*.json (extra flags: ARGS="--dry-run --force")
+	@status=0; \
+	for file in scripts/mobilizon_groups/*.json; do \
+		echo "🚀 Mobilizon groups: $$file"; \
+		uv run python scripts/mobilizon_group.py --batch "$$file" $(ARGS) || status=1; \
+	done; \
+	exit $$status

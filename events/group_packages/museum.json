@@ -71,12 +71,39 @@
       ],
       "startDate": "2026-06-13T00:00:00-04:00",
       "endDate": "2030-11-21T00:00:00-05:00"
+    },
+    "NXTHVN": {
+      "calendarIDs": [
+        "https://www.nxthvn.com/calendar/"
+      ],
+      "calendarType": "JSON_LD",
+      "publisherInfo": {
+        "mobilizon": {
+          "groupID": "TODO: create with scripts/mobilizon_group.py",
+          "defaultCategory": "arts",
+          "defaultTags": [
+            "art",
+            "gallery"
+          ]
+        }
+      },
+      "defaultLocation": {
+        "latitude": 41.3212041,
+        "longitude": -72.9368585,
+        "locality": "New Haven",
+        "postalCode": "06511",
+        "street": "169 Henry St",
+        "country": "United States",
+        "region": "Connecticut",
+        "timezone": "America/New_York",
+        "description": "NXTHVN"
+      },
+      "onlineAddress": "https://www.nxthvn.com/"
     }
   },
   "need_to_parse": [
     "https://beinecke.library.yale.edu/calendar",
     "https://www.city-gallery.org/",
-    "https://www.nxthvn.com/calendar/",
     "https://artgallery.yale.edu/",
     "https://www.thewadsworth.org/"
   ]

@@ -1,0 +1,9 @@
+{
+  "groups": [
+    {
+      "name": "New Haven Community Boating",
+      "groupImage": "scripts/resources/canal-dock-boathouse.jpg",
+      "eventImage": "scripts/resources/canal-dock-boathouse.jpg"
+    }
+  ]
+}
