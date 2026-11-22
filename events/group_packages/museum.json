@@ -3,6 +3,7 @@
   "description": "All events relating to museums.",
   "groupKernels": {
     "New Haven Museum": {
+      "family_friendly": true,
       "calendarIDs": [
         "https://calendar.google.com/calendar/ical/l5ifo63avfkipv35727sa764tk%40group.calendar.google.com/public/basic.ics"
       ],
@@ -31,6 +32,7 @@
       "onlineAddress": "https://www.newhavenmuseum.org/"
     },
     "Yale Peabody Museum": {
+      "family_friendly": true,
       "title": "Yale Peabody Museum",
       "calendarIDs": [
         "Yale Peabody"
@@ -73,6 +75,7 @@
       "endDate": "2030-11-21T00:00:00-05:00"
     },
     "NXTHVN": {
+      "family_friendly": true,
       "calendarIDs": [
         "https://www.nxthvn.com/calendar/"
       ],

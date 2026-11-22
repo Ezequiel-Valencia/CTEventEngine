@@ -20,3 +20,4 @@ class KnoxHartfordScraper(TribeEventsScraper):
     )
     category = EventParameters.Categories.causes
     tags = ["volunteer", "gardening"]
+    family_friendly = True

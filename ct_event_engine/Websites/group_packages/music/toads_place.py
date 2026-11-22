@@ -38,6 +38,7 @@ class ToadsPlaceScraper(CardListingScraper):
     )
     category = EventParameters.Categories.music
     tags = ["concert", "music"]
+    family_friendly = False
 
     def card_event(self, card: Tag) -> GenericEvent | None:
         day = text_of(card, ".et_pb_blurb_content .et_pb_module_header")

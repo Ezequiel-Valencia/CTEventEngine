@@ -3,6 +3,7 @@ import unittest
 
 from calendar_event_engine.types.generics import GenericEvent
 
+from ct_event_engine.sites import site_of
 from tests.group_packages.http_fixtures import FAKE_GROUP_ID, replay, scraper_class
 
 
@@ -66,6 +67,11 @@ class ScraperTestCase(unittest.TestCase):
                 mobilizon = event.publisher_specific_info["mobilizon"]
                 self.assertEqual(mobilizon["groupID"], FAKE_GROUP_ID)
                 self.assertEqual(mobilizon["defaultCategory"], scraper.category.name)
+
+    def test_source_is_tagged(self):
+        scraper = scraper_class(self.module)(FAKE_GROUP_ID)
+        self.assertIsInstance(scraper.family_friendly, bool)
+        self.assertIsNotNone(site_of(scraper.group_kernel))
 
     def test_no_duplicates(self):
         keys = [(event.title, event.begins_on) for event in self.events]

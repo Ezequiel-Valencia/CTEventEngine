@@ -40,6 +40,7 @@ class BeineckeScraper(VenueScraper):
     )
     category = EventParameters.Categories.arts
     tags = ["museum", "library", "Yale"]
+    family_friendly = True
 
     def scrape(self) -> list[GenericEvent]:
         details: dict[str, tuple[str, str | None]] = {}

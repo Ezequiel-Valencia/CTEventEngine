@@ -42,6 +42,7 @@ class CreativeArtsWorkshopScraper(VenueScraper):
     )
     category = EventParameters.Categories.crafts
     tags = ["art", "class"]
+    family_friendly = True
 
     def scrape(self) -> list[GenericEvent]:
         events: list[GenericEvent] = []

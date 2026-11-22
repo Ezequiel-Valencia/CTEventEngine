@@ -22,3 +22,4 @@ class ShubertScraper(CarbonhouseEventsScraper):
     )
     category = EventParameters.Categories.theatre
     tags = ["theatre", "Broadway"]
+    family_friendly = True

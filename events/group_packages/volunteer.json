@@ -3,6 +3,7 @@
   "description": "Calendars of groups that focus on volunteering.",
   "groupKernels": {
     "Save The Sound": {
+      "family_friendly": true,
       "calendarIDs": [
         "https://calendar.google.com/calendar/ical/ctenvironment%40gmail.com/public/basic.ics"
       ],
@@ -22,6 +23,7 @@
       "defaultTags": []
     },
     "Healing Meals": {
+      "family_friendly": true,
       "calendarIDs": [],
       "calendarType": "ICAL",
       "publisherInfo": {
@@ -48,6 +50,7 @@
       "onlineAddress": "https://healingmealsproject.org/"
     },
     "Bradley Street Bike Co-Op": {
+      "family_friendly": true,
       "calendarIDs": [
         "https://calendar.google.com/calendar/ical/bsbc.co_c4dt5esnmutedv7p3nu01aerhk%40group.calendar.google.com/public/basic.ics"
       ],

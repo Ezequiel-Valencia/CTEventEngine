@@ -3,6 +3,7 @@
   "description": "Calendars of With No Relation.",
   "groupKernels": {
     "Downtown New Haven": {
+      "family_friendly": true,
       "calendarIDs": [
         "3sb3oi1p84kjscr1lrpa15paavbhtrol@import.calendar.google.com"
       ],
@@ -16,6 +17,7 @@
       "onlineAddress": "https://www.infonewhaven.com/"
     },
     "Elm City Games": {
+      "family_friendly": true,
       "calendarIDs": [
         "https://calendar.google.com/calendar/ical/c_2fc67df8dc1e133f005ee39ac99fe484229ebd6d96a0e0f53fb322c2609e6b0e%40group.calendar.google.com/public/basic.ics",
         "https://calendar.google.com/calendar/ical/c_c38a717324dce0a08588eef4ac9b6c30a2151a0adbd4be141f9e84f2b6700516%40group.calendar.google.com/public/basic.ics",
@@ -52,14 +54,15 @@
       "onlineAddress": "https://www.elmcitygames.com/"
     },
     "WBT": {
+      "family_friendly": false,
       "calendarIDs": [
         "https://calendar.google.com/calendar/ical/wbtblackbox%40gmail.com/public/basic.ics"
       ],
       "calendarType": "ICAL",
       "publisherInfo": {
         "mobilizon": {
-          "groupID": 24,
-          "defaultImageID": "58abf5d5-6c59-450f-b284-e4fd5215c0d1"
+          "groupID": 11,
+          "defaultImageID": "bf8fc031-5605-4dd4-975d-48d6a6e83415"
         }
       },
       "defaultLocation": {
@@ -76,6 +79,7 @@
       "onlineAddress": "https://www.witchbitchthrift.com/"
     },
     "Sea Tea Improv": {
+      "family_friendly": true,
       "calendarIDs": [
         "https://seateaimprov.com/calendar/"
       ],

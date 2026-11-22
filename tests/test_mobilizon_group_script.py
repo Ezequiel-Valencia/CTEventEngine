@@ -502,6 +502,7 @@ def test_cli_search_and_dry_run_are_exclusive():
 # --------------------------------------------------------------------------- #
 
 BATCH_DIR = Path(__file__).resolve().parent.parent / "scripts" / "mobilizon_groups"
+BATCH_FILES = sorted(BATCH_DIR.glob("*/*.json"))
 
 
 def _write_batch(tmp_path: Path, groups: list[dict]) -> Path:
@@ -510,8 +511,9 @@ def _write_batch(tmp_path: Path, groups: list[dict]) -> Path:
     return path
 
 
-@pytest.mark.parametrize("path", sorted(BATCH_DIR.glob("*.json")), ids=lambda p: p.stem)
+@pytest.mark.parametrize("path", BATCH_FILES, ids=lambda p: f"{p.parent.name}/{p.stem}")
 def test_module_batch_files_are_valid(path):
+    assert path.parent.name in {"ctgrassroots", "underground"}
     batch = load_batch(path)
     for entry in batch["groups"]:
         assert {"name", "groupImage", "eventImage", "url"} <= set(entry)
@@ -803,8 +805,10 @@ def test_cli_batch_folder_rejects_invalid_files(tmp_path, capsys):
         main(["--batch", str(tmp_path / "nothing_here")])
 
 
-def test_module_batch_folder_is_accepted():
-    assert batch_files(BATCH_DIR) == sorted(BATCH_DIR.glob("*.json"))
+@pytest.mark.parametrize("site", ["ctgrassroots", "underground"])
+def test_site_batch_folders_are_accepted(site):
+    folder = BATCH_DIR / site
+    assert batch_files(folder) == sorted(folder.glob("*.json"))
 
 
 @integration

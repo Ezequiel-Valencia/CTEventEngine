@@ -23,3 +23,4 @@ class CanalDockScraper(WildApricotScraper):
     )
     category = EventParameters.Categories.outdoors_adventure
     tags = ["boating", "rowing", "sailing"]
+    family_friendly = True

@@ -3,6 +3,7 @@
   "description": "Libraries in CT.",
   "groupKernels": {
     "New Haven Library": {
+      "family_friendly": true,
       "calendarIDs": [
         "8qf27rmmeun7mat412odluuha11umbhm@import.calendar.google.com"
       ],
@@ -31,6 +32,7 @@
       "onlineAddress": "https://nhfpl.org/"
     },
     "The Institute Library": {
+      "family_friendly": true,
       "calendarIDs": [
         "https://calendar.google.com/calendar/ical/ke5stbpohu2nb4qh3f1r9vgci4nv5knb%40import.calendar.google.com/public/basic.ics"
       ],

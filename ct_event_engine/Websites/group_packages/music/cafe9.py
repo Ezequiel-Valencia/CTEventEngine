@@ -38,7 +38,8 @@ class Cafe9Scraper(VenueScraper):
         description="Cafe 9",
     )
     category = EventParameters.Categories.music
-    tags = ["nightlife", "music","bar"]
+    tags = ["nightlife", "music", "bar"]
+    family_friendly = False
 
     def scrape(self) -> list[GenericEvent]:
         events = []

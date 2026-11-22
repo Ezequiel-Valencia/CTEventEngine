@@ -32,6 +32,7 @@ class CollegeStreetMusicHallScraper(CardListingScraper):
     )
     category = EventParameters.Categories.music
     tags = ["concert", "music"]
+    family_friendly = False
 
     def card_event(self, card: Tag) -> GenericEvent | None:
         title = text_of(card, ".sg__title a")

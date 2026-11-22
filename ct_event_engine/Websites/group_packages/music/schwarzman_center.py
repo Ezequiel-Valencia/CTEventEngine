@@ -30,6 +30,7 @@ class SchwarzmanCenterScraper(DetailPagesJsonLdScraper):
     )
     category = EventParameters.Categories.performing_visual_arts
     tags = ["Yale", "performance"]
+    family_friendly = True
 
     def event_links(self, listing: BeautifulSoup) -> dict[str, str]:
         # The card's subheading names the room/building within the center.

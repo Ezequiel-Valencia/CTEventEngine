@@ -33,12 +33,14 @@ new group is created. A fresh default event image is uploaded on every run.
 
 With --batch FILE, every group listed in FILE is handled in one run (NAME is
 not given). There is one batch file per scraper module in
-``scripts/mobilizon_groups/<module>.json``:
-    uv run python scripts/mobilizon_group.py --batch scripts/mobilizon_groups/music.json
+``scripts/mobilizon_groups/<site>/<module>.json``, where <site> is ``ctgrassroots``
+or ``underground`` (each site is its own Mobilizon instance: pass the
+underground one's endpoint with --endpoint):
+    uv run python scripts/mobilizon_group.py --batch scripts/mobilizon_groups/ctgrassroots/music.json
     {"groups": [{"name": "Cafe 9", "groupImage": "images/cafe9.png",
                  "eventImage": "https://example.com/cafe9.jpg", "groupID": 14}]}
 --batch also takes a folder: every ``*.json`` file in it (sorted by name) is
-handled in turn with a single login, e.g. ``--batch scripts/mobilizon_groups``.
+handled in turn with a single login, e.g. ``--batch scripts/mobilizon_groups/ctgrassroots``.
 Each entry needs ``name``, ``groupImage``, ``eventImage`` and ``url`` (the
 venue's main website, which is linked at the end of the group's description);
 ``username`` and ``summary`` are optional. An entry without a ``groupID`` is created (or matched
@@ -627,7 +629,7 @@ def main(argv: list[str] | None = None) -> int:
         type=Path,
         metavar="PATH",
         help="JSON file listing groups to create/update, e.g. "
-        "scripts/mobilizon_groups/music.json, or a folder of such files "
+        "scripts/mobilizon_groups/ctgrassroots/music.json, or a folder of such files "
         "(all handled with one login)",
     )
     parser.add_argument(

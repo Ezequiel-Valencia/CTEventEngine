@@ -42,6 +42,7 @@ class ClubVandomeScraper(CardListingScraper):
     )
     category = EventParameters.Categories.party
     tags = ["nightlife", "music"]
+    family_friendly = False
 
     def card_event(self, card: Tag) -> GenericEvent | None:
         title = card.select_one("h2.title a[href]")

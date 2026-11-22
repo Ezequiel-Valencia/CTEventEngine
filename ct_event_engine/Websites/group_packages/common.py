@@ -26,6 +26,7 @@ from calendar_event_engine.types.submission import (
 )
 
 from ct_event_engine.logger import create_logger_from_designated_logger
+from ct_event_engine.sites import FAMILY_FRIENDLY_KEY
 
 logger = create_logger_from_designated_logger(__name__)
 
@@ -185,9 +186,14 @@ class VenueScraper(Scraper):
     Base for a single venue/organization. Subclasses set the class attributes
     and implement ``scrape``.
 
+    ``family_friendly`` is required: True publishes every event of the venue
+    to ctgrassroots.org, False to underground.ctgrassroots.org (adults and
+    nightlife). See ``ct_event_engine.sites``.
+
     Args:
-        group_id: Mobilizon group the events are published under. Create the
-            group with ``scripts/mobilizon_group.py`` to get one.
+        group_id: Mobilizon group on the venue's site the events are published
+            under. Create the group with ``scripts/mobilizon_group.py`` to get
+            one; until then (None) the events are not published.
         default_image_id: Optional Mobilizon media used as the event picture.
         now: Reference time for the date window; defaults to the current time.
     """
@@ -197,6 +203,7 @@ class VenueScraper(Scraper):
     address: GenericAddress | None = None
     category: EventParameters.Categories = EventParameters.Categories.default
     tags: list[str] = []
+    family_friendly: bool
     # Events starting further out than this are left for a later run.
     days_ahead: int = 31
     # Start time for a listing whose time can't be read.
@@ -204,7 +211,7 @@ class VenueScraper(Scraper):
 
     def __init__(
         self,
-        group_id: int,
+        group_id: int | None = None,
         default_image_id: str | None = None,
         now: datetime.datetime | None = None,
     ):
@@ -234,6 +241,7 @@ class VenueScraper(Scraper):
             [self.url],
             ScraperTypes.CUSTOM,
             "",
+            source_info={FAMILY_FRIENDLY_KEY: self.family_friendly},
         )
 
     def connect_to_source(self) -> None:

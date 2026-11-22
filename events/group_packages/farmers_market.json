@@ -2,6 +2,7 @@
   "name": "Farmers Market Package",
   "groupKernels": {
     "Stonington": {
+      "family_friendly": true,
       "title": "Stonington Farmers Market",
       "calendarIDs": [
         "Stonington Farmers Market"
@@ -40,6 +41,7 @@
       "endDate": "2026-10-12T00:00:00-04:00"
     },
     "Naugatuck": {
+      "family_friendly": true,
       "title": "Naugatuck Farmers Market",
       "calendarIDs": [
         "Naugatuck Farmers Market"
@@ -78,6 +80,7 @@
       "endDate": "2026-10-28T00:00:00-04:00"
     },
     "Stamford": {
+      "family_friendly": true,
       "title": "Stamford Downtown Farmers Market",
       "calendarIDs": [
         "Stamford Downtown Farmers Market"
@@ -116,6 +119,7 @@
       "endDate": "2026-10-10T00:00:00-04:00"
     },
     "East side Bridgeport": {
+      "family_friendly": true,
       "title": "East Side Bridgeport Farmers Market",
       "calendarIDs": [
         "East Side Bridgeport Farmers Market"
@@ -154,6 +158,7 @@
       "endDate": "2025-10-15T00:00:00-04:00"
     },
     "West Hartford": {
+      "family_friendly": true,
       "title": "West Hartford Farmers Market",
       "calendarIDs": [
         "West Hartford Farmers Market"
@@ -192,6 +197,7 @@
       "endDate": "2026-12-10T00:00:00-05:00"
     },
     "Willimantic": {
+      "family_friendly": true,
       "title": "Willimantic Farmers Market",
       "calendarIDs": [
         "Willimantic Farmers Market"
@@ -230,6 +236,7 @@
       "endDate": "2026-10-26T00:00:00-04:00"
     },
     "Woster Square New Haven": {
+      "family_friendly": true,
       "title": "CitySeed Woster Square Farmers Market",
       "calendarIDs": [
         "CitySeed Woster Square Farmers Market"

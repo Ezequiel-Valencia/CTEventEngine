@@ -23,3 +23,4 @@ class Firehouse12Scraper(SquarespaceEventsScraper):
     )
     category = EventParameters.Categories.music
     tags = ["jazz", "concert", "music"]
+    family_friendly = False

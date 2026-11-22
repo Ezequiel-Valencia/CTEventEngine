@@ -25,3 +25,4 @@ class SpaceBallroomScraper(EventbriteLinksScraper):
     )
     category = EventParameters.Categories.music
     tags = ["concert", "music"]
+    family_friendly = False

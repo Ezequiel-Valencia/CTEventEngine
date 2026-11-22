@@ -2,7 +2,14 @@
 
 ## Purpose
 
-This repository scrapes social event information from venue/event websites in Connecticut and publishes them to Mobilizon. Each scraper targets a specific website and extracts:
+This repository scrapes social event information from venue/event websites in Connecticut and publishes them to Mobilizon — to one of two sites (separate Mobilizon instances):
+
+- **ctgrassroots.org** — family friendly events
+- **underground.ctgrassroots.org** — events for adults and nightlife
+
+See "ctgrassroots vs underground" below; every source has a `family_friendly` tag.
+
+Each scraper targets a specific website and extracts:
 
 - **Title** — event name
 - **Description** — event details
@@ -153,10 +160,10 @@ per event subclasses `CardListingScraper` (set `card_selector`, implement
 `self.upcoming(month, day, clock)` for dates written without a year (it falls
 back to the class's `default_start_time`). It takes the Mobilizon `group_id` in its
 constructor (create the group with `scripts/mobilizon_group.py`; list it in its
-module's batch file `scripts/mobilizon_groups/<package>.json` and run
+module's batch file `scripts/mobilizon_groups/<site>/<package>.json` and run
 `--batch` on that file to create or update all of the module's groups at once;
-`make all_groups` runs `--batch scripts/mobilizon_groups`, i.e. every module's
-file with a single login).
+`make ctgrassroots_groups` / `make underground_groups` run `--batch` on a
+site's whole folder with a single login; `make all_groups` does both).
 
 Tests replay recorded responses, so they run offline. When a site changes,
 re-record and update the spot checks in its test:
@@ -164,6 +171,36 @@ re-record and update the spot checks in its test:
 ```bash
 uv run python -m tests.group_packages.http_fixtures music.webster
 ```
+
+---
+
+## ctgrassroots vs underground
+
+Every source is tagged with a `family_friendly` boolean
+(`ct_event_engine/sites.py`), and all of its events are published to one site:
+`true` → ctgrassroots.org, `false` → underground.ctgrassroots.org. The tag is
+static: nothing in an event's text changes where it goes.
+
+- **Custom scraper**: set the class attribute `family_friendly = True` or
+  `False` (required).
+- **Group package entry**: set it on the source itself, not in
+  `publisherInfo` (it isn't publisher specific):
+  `"Sea Tea Improv": {"family_friendly": false, "calendarIDs": [...], ...}`.
+
+Use `false` for bars, nightclubs, concert venues and comedy clubs; `true` for
+museums, libraries, theatres, classes, markets, volunteering.
+
+Each site is its own Mobilizon instance with its own group and media IDs, so a
+source's `groupID`/`defaultImageID` are the ones on its site. The groups'
+batch files live in `scripts/mobilizon_groups/ctgrassroots/` and
+`scripts/mobilizon_groups/underground/`; `make ctgrassroots_groups` /
+`make underground_groups` create them (`make all_groups` does both).
+The engine keeps the tag in the kernel's `source_info`. `runner.py` passes it
+one `MobilizonUploader` per site and `ct_event_engine/sites.py:route_event`,
+which the engine calls for every event to pick its site. An untagged source's
+events, or events whose source has no `groupID` on its site yet, are skipped
+and logged. Group IDs are per site: when a source changes site, replace its
+`groupID`/`defaultImageID` with the ones on the new site.
 
 ---
 
@@ -190,6 +227,9 @@ All from the `calendar-event-engine` package (sourced from git):
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `SLACK_WEBHOOK` | No | Slack webhook URL for notifications |
+| `MOBILIZON_ENDPOINT` | Yes | GraphQL endpoint of ctgrassroots.org (family site) |
+| `UNDERGROUND_MOBILIZON_ENDPOINT` | No | GraphQL endpoint of underground.ctgrassroots.org; unset = underground events aren't published |
+| `MOBILIZON_EMAIL` / `MOBILIZON_PASSWORD` or `MOBILIZON_LOGIN_FILE` | Yes | Login, shared by both sites |
 | `TEST_MODE` | No | Set to any value to enable test mode |
 | `RUNNER_SUBMISSION_JSON_PATH` | Yes | Path to the submission JSON config file |
 | `CACHE_DB_PATH` | Yes (Docker) | Directory for SQLite cache database |

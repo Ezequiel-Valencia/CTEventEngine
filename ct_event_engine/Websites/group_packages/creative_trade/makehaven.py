@@ -33,6 +33,7 @@ class MakeHavenScraper(CardListingScraper):
     )
     category = EventParameters.Categories.crafts
     tags = ["makerspace", "workshop"]
+    family_friendly = True
 
     def card_event(self, card: Tag) -> GenericEvent | None:
         title = text_of(card, ".card-title a")
