@@ -3,6 +3,7 @@
   "description": "All events relating to museums.",
   "groupKernels": {
     "New Haven Museum": {
+      "family_friendly": true,
       "calendarIDs": [
         "https://calendar.google.com/calendar/ical/l5ifo63avfkipv35727sa764tk%40group.calendar.google.com/public/basic.ics"
       ],

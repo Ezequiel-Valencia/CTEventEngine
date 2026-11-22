@@ -3,6 +3,7 @@
   "description": "All events relating to museums.",
   "groupKernels": {
     "New Haven Museum": {
+      "family_friendly": true,
       "calendarIDs": [
         "https://calendar.google.com/calendar/ical/l5ifo63avfkipv35727sa764tk%40group.calendar.google.com/public/basic.ics"
       ],
@@ -31,6 +32,7 @@
       "onlineAddress": "https://www.newhavenmuseum.org/"
     },
     "Yale Peabody Museum": {
+      "family_friendly": true,
       "title": "Yale Peabody Museum",
       "calendarIDs": [
         "Yale Peabody"
@@ -71,12 +73,41 @@
       ],
       "startDate": "2026-06-13T00:00:00-04:00",
       "endDate": "2030-11-21T00:00:00-05:00"
+    },
+    "NXTHVN": {
+      "family_friendly": true,
+      "calendarIDs": [
+        "https://www.nxthvn.com/calendar/"
+      ],
+      "calendarType": "JSON_LD",
+      "publisherInfo": {
+        "mobilizon": {
+          "groupID": 41,
+          "defaultImageID": "4785e23a-edb5-4758-9abf-9ddba9b8f0c9",
+          "defaultCategory": "arts",
+          "defaultTags": [
+            "art",
+            "gallery"
+          ]
+        }
+      },
+      "defaultLocation": {
+        "latitude": 41.3212041,
+        "longitude": -72.9368585,
+        "locality": "New Haven",
+        "postalCode": "06511",
+        "street": "169 Henry St",
+        "country": "United States",
+        "region": "Connecticut",
+        "timezone": "America/New_York",
+        "description": "NXTHVN"
+      },
+      "onlineAddress": "https://www.nxthvn.com/"
     }
   },
   "need_to_parse": [
     "https://beinecke.library.yale.edu/calendar",
     "https://www.city-gallery.org/",
-    "https://www.nxthvn.com/calendar/",
     "https://artgallery.yale.edu/",
     "https://www.thewadsworth.org/"
   ]

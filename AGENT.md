@@ -2,7 +2,14 @@
 
 ## Purpose
 
-This repository scrapes social event information from venue/event websites in Connecticut and publishes them to Mobilizon. Each scraper targets a specific website and extracts:
+This repository scrapes social event information from venue/event websites in Connecticut and publishes them to Mobilizon — to one of two sites (separate Mobilizon instances):
+
+- **ctgrassroots.org** — family friendly events
+- **underground.ctgrassroots.org** — events for adults and nightlife
+
+See "ctgrassroots vs underground" below; every source has a `family_friendly` tag.
+
+Each scraper targets a specific website and extracts:
 
 - **Title** — event name
 - **Description** — event details
@@ -17,10 +24,10 @@ This repository scrapes social event information from venue/event websites in Co
 ct_event_engine/
 ├── runner.py              # Entry point; registers scrapers and starts the engine
 ├── logger.py              # Logger factory
-└── Websites/              # One file per concrete scraper implementation
-    └── cafe9.py           # Scraper for cafenine.com
+└── Websites/
+    └── group_packages/    # Every custom scraper (see "Group Package Scrapers")
 tests/
-└── test_cafe9.py          # Integration tests for Cafe9Scraper
+└── group_packages/        # Offline tests replaying recorded responses
 ```
 
 ---
@@ -98,7 +105,7 @@ from ct_event_engine.Websites.myvenue import MyVenueScraper
 
 custom_scrapers = {
     MobilizonUploader(env_test_mode, cache_db): [
-        CustomScraperJob("Cafe 9", "Music venue", Cafe9Scraper()),
+        CustomScraperJob("Cafe 9", "Music venue", Cafe9Scraper(group_id=14)),
         CustomScraperJob("My Venue", "Category description", MyVenueScraper()),  # add here
     ]
 }
@@ -108,6 +115,92 @@ custom_scrapers = {
 1. Venue name (string)
 2. Venue category/description (string)
 3. Instance of the scraper class
+
+---
+
+## Group Package Scrapers
+
+For a site listed under `need_to_parse` in `events/group_packages/<package>.json`,
+first try a built-in calendar type and add it as a group kernel in that JSON:
+`ICAL`, `GOOGLE_CAL`, `RSS` (only feeds with `ev:startdate`/`xCal:dtstart`; a
+plain `pubDate` isn't an event date) or `JSON_LD` (a page whose
+`<script type="application/ld+json">` lists the events). Sea Tea Improv and
+NXTHVN are `JSON_LD` kernels; `tests/group_packages/package_kernels.py` runs a
+kernel through the engine offline so its test checks the JSON entry works.
+
+Only when none fits, write a custom scraper in the matching subfolder, with
+tests in the same layout. Reuse the engine's parsers where part of a site fits
+one (e.g. `schwarzman_center.py` reads detail pages with the JSON-LD parser):
+
+```
+ct_event_engine/Websites/group_packages/
+├── common.py        # VenueScraper base class + date/time/text helpers
+├── platforms.py     # Shared platforms (Tribe, Squarespace, Wild Apricot, rhp-events,
+│                    #   Carbonhouse, detail pages with JSON-LD, Eventbrite links)
+└── <package>/<site>.py
+tests/group_packages/
+├── http_fixtures.py         # Records/replays a scraper's HTTP responses
+├── package_kernels.py       # Runs a group package kernel through the engine
+├── scraper_test_case.py     # Shared checks every scraper test inherits
+└── <package>/test_<site>.py, <package>/fixtures/<site>/
+```
+
+A `VenueScraper` subclass sets `name`, `url`, `address`, `category`, `tags` and
+implements `scrape()`; the base class keeps events within `days_ahead` (31 days)
+and fills the Mobilizon metadata.
+
+Before writing `scrape()` by hand, check whether the site runs on a platform in
+`platforms.py`; then the venue file only sets its name, url and address. A
+venue page that links to Eventbrite events subclasses `EventbriteLinksScraper`
+(see `music/space_ballroom.py`); one whose own event pages carry JSON-LD
+subclasses `DetailPagesJsonLdScraper`. A single listing page with one element
+per event subclasses `CardListingScraper` (set `card_selector`, implement
+`card_event`). Use the helpers in `common.py` rather than repeating them:
+`text_of`/`attr_of` for elements, `og_meta` for Open Graph tags, and
+`self.upcoming(month, day, clock)` for dates written without a year (it falls
+back to the class's `default_start_time`). It takes the Mobilizon `group_id` in its
+constructor (create the group with `scripts/mobilizon_group.py`; list it in its
+module's batch file `scripts/mobilizon_groups/<site>/<package>.json` and run
+`--batch` on that file to create or update all of the module's groups at once;
+`make ctgrassroots_groups` / `make underground_groups` run `--batch` on a
+site's whole folder with a single login; `make all_groups` does both).
+
+Tests replay recorded responses, so they run offline. When a site changes,
+re-record and update the spot checks in its test:
+
+```bash
+uv run python -m tests.group_packages.http_fixtures music.webster
+```
+
+---
+
+## ctgrassroots vs underground
+
+Every source is tagged with a `family_friendly` boolean
+(`ct_event_engine/sites.py`), and all of its events are published to one site:
+`true` → ctgrassroots.org, `false` → underground.ctgrassroots.org. The tag is
+static: nothing in an event's text changes where it goes.
+
+- **Custom scraper**: set the class attribute `family_friendly = True` or
+  `False` (required).
+- **Group package entry**: set it on the source itself, not in
+  `publisherInfo` (it isn't publisher specific):
+  `"Sea Tea Improv": {"family_friendly": false, "calendarIDs": [...], ...}`.
+
+Use `false` for bars, nightclubs, concert venues and comedy clubs; `true` for
+museums, libraries, theatres, classes, markets, volunteering.
+
+Each site is its own Mobilizon instance with its own group and media IDs, so a
+source's `groupID`/`defaultImageID` are the ones on its site. The groups'
+batch files live in `scripts/mobilizon_groups/ctgrassroots/` and
+`scripts/mobilizon_groups/underground/`; `make ctgrassroots_groups` /
+`make underground_groups` create them (`make all_groups` does both).
+The engine keeps the tag in the kernel's `source_info`. `runner.py` passes it
+one `MobilizonUploader` per site and `ct_event_engine/sites.py:route_event`,
+which the engine calls for every event to pick its site. An untagged source's
+events, or events whose source has no `groupID` on its site yet, are skipped
+and logged. Group IDs are per site: when a source changes site, replace its
+`groupID`/`defaultImageID` with the ones on the new site.
 
 ---
 
@@ -134,6 +227,9 @@ All from the `calendar-event-engine` package (sourced from git):
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `SLACK_WEBHOOK` | No | Slack webhook URL for notifications |
+| `MOBILIZON_ENDPOINT` | Yes | GraphQL endpoint of ctgrassroots.org (family site) |
+| `UNDERGROUND_MOBILIZON_ENDPOINT` | No | GraphQL endpoint of underground.ctgrassroots.org; unset = underground events aren't published |
+| `MOBILIZON_EMAIL` / `MOBILIZON_PASSWORD` or `MOBILIZON_LOGIN_FILE` | Yes | Login, shared by both sites |
 | `TEST_MODE` | No | Set to any value to enable test mode |
 | `RUNNER_SUBMISSION_JSON_PATH` | Yes | Path to the submission JSON config file |
 | `CACHE_DB_PATH` | Yes (Docker) | Directory for SQLite cache database |

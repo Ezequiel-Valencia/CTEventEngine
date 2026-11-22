@@ -1,0 +1,26 @@
+{
+  "groups": [
+    {
+      "name": "WBT",
+      "groupImage": "scripts/resources/wbt logo.png",
+      "eventImage": "scripts/resources/wbt.webp",
+      "url": "https://www.witchbitchthrift.com/",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 11,
+        "defaultImageID": "bf8fc031-5605-4dd4-975d-48d6a6e83415"
+      },
+      "groupID": 11,
+      "defaultImageID": "bf8fc031-5605-4dd4-975d-48d6a6e83415"
+    }
+  ],
+  "lastRun": {
+    "at": "2026-11-22T17:34:17+00:00",
+    "dryRun": false,
+    "force": false,
+    "groups": 1,
+    "errors": 0,
+    "skipped": 0,
+    "skippedExisting": 0
+  }
+}

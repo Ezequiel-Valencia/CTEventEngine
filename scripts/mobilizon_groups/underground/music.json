@@ -1,0 +1,104 @@
+{
+  "groups": [
+    {
+      "name": "Cafe 9",
+      "groupImage": "scripts/resources/cafe9.jpg",
+      "eventImage": "scripts/resources/cafe9.jpg",
+      "url": "https://cafenine.com/",
+      "groupID": 5,
+      "defaultImageID": "e56e9c4a-61a4-49f7-b8d8-293ab16a6b11",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 5,
+        "defaultImageID": "e56e9c4a-61a4-49f7-b8d8-293ab16a6b11"
+      }
+    },
+    {
+      "name": "Club Vandome",
+      "groupImage": "scripts/resources/vandome.jpg",
+      "eventImage": "scripts/resources/vandome.jpg",
+      "url": "http://clubvandome.com/",
+      "groupID": 6,
+      "defaultImageID": "4e48795c-1772-460a-89a5-517c186125d2",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 6,
+        "defaultImageID": "4e48795c-1772-460a-89a5-517c186125d2"
+      }
+    },
+    {
+      "name": "College Street Music Hall",
+      "groupImage": "scripts/resources/college-street-music-hall.jpg",
+      "eventImage": "scripts/resources/college-street-music-hall.jpg",
+      "url": "https://collegestreetmusichall.com/",
+      "groupID": 7,
+      "defaultImageID": "98b4b01d-5442-4809-a6c9-28f555a8a5c8",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 7,
+        "defaultImageID": "98b4b01d-5442-4809-a6c9-28f555a8a5c8"
+      }
+    },
+    {
+      "name": "Firehouse 12",
+      "groupImage": "scripts/resources/firehouse12.jpg",
+      "eventImage": "scripts/resources/firehouse12.jpg",
+      "url": "https://firehouse12.com/",
+      "groupID": 8,
+      "defaultImageID": "e02e4a0e-34bb-423d-b2f6-35fb65075dc7",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 8,
+        "defaultImageID": "e02e4a0e-34bb-423d-b2f6-35fb65075dc7"
+      }
+    },
+    {
+      "name": "Space Ballroom",
+      "groupImage": "scripts/resources/space-ballroom.jpg",
+      "eventImage": "scripts/resources/space-ballroom.jpg",
+      "url": "https://spaceballroom.com/",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 12,
+        "defaultImageID": "4eb09e39-6405-4d92-8bfe-859515f8e109"
+      },
+      "groupID": 12,
+      "defaultImageID": "4eb09e39-6405-4d92-8bfe-859515f8e109"
+    },
+    {
+      "name": "The Webster",
+      "groupImage": "scripts/resources/webster.jpg",
+      "eventImage": "scripts/resources/webster.jpg",
+      "url": "https://thewebsterct.com/",
+      "groupID": 9,
+      "defaultImageID": "15ce8ce7-9d09-4e75-9ed4-338ff0be3f38",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 9,
+        "defaultImageID": "15ce8ce7-9d09-4e75-9ed4-338ff0be3f38"
+      }
+    },
+    {
+      "name": "Toad's Place",
+      "groupImage": "scripts/resources/toads-place.jpg",
+      "eventImage": "scripts/resources/toads-place.jpg",
+      "url": "https://www.toadsplace.com/",
+      "groupID": 10,
+      "defaultImageID": "2f840dc5-9fd5-4f6d-9abf-caa68c8c4fca",
+      "lastRun": {
+        "action": "sync",
+        "groupID": 10,
+        "defaultImageID": "2f840dc5-9fd5-4f6d-9abf-caa68c8c4fca"
+      }
+    }
+  ],
+  "lastRun": {
+    "at": "2026-11-22T17:34:20+00:00",
+    "dryRun": false,
+    "force": false,
+    "groups": 7,
+    "errors": 0,
+    "skipped": 0,
+    "skippedExisting": 6
+  }
+}
