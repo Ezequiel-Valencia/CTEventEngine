@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.11, <4"
 resolution-markers = [
     "python_full_version >= '3.15'",
@@ -312,7 +312,7 @@ wheels = [
 
 [[package]]
 name = "calendar-event-engine"
-version = "0.5.0"
+version = "0.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "geopy" },
@@ -328,9 +328,9 @@ dependencies = [
     { name = "tenacity" },
     { name = "validators" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/01/7b/6607e2ac9c324fa59a094ed5b2623794691dd8e60f38aace2e738072864c/calendar_event_engine-0.5.0.tar.gz", hash = "sha256:e47362a974dd3ca9539799b637c9fb17c8ac1401e4c18fbf8b5e0e5d168cfd53", size = 538037, upload-time = "2026-11-22T17:10:10.198Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cd/ef/cf19b910d2792f1cbdf47ebd33583b0ba272b9163c426009121b1900285c/calendar_event_engine-0.6.0.tar.gz", hash = "sha256:167db8735a9f94fa4193387ae721eeab417e8186ae939ca05243ee50f20bb357", size = 544250, upload-time = "2026-11-23T23:44:39.741Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/09/16/f846057589e23b971701480b25794a497e97c86bf5ec96b5c5ef87ef87ac/calendar_event_engine-0.5.0-py3-none-any.whl", hash = "sha256:dc12c500e36563bc386b51a55471349452b863e4c9854c6c801249022b35799b", size = 48922, upload-time = "2026-11-22T17:10:08.55Z" },
+    { url = "https://files.pythonhosted.org/packages/9b/0c/dd578fa975590f28de2616cdc131f60770c4145253d2bb027f715019a09d/calendar_event_engine-0.6.0-py3-none-any.whl", hash = "sha256:fc5da83fe3130e21ad2d57e8d046be8a62ec0b3ad5fa4042293d5c39ebfb9a2c", size = 53584, upload-time = "2026-11-23T23:44:38.533Z" },
 ]
 
 [[package]]
@@ -847,7 +847,7 @@ dev = [
 requires-dist = [
     { name = "aiohttp", specifier = ">=3.14.5,<4" },
     { name = "beautifulsoup4", specifier = ">=4.15.0,<5" },
-    { name = "calendar-event-engine", specifier = ">=0.5.0" },
+    { name = "calendar-event-engine", specifier = ">=0.6.0" },
     { name = "pydantic", specifier = ">=2.14.3,<3" },
     { name = "pytest", specifier = ">=9.2.0,<10" },
     { name = "pytz", specifier = ">=2026.6" },
