@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 
 from ct_event_engine.Websites.group_packages.common import (
     EASTERN,
+    VenueScraper,
     attr_of,
     clean,
     html_to_text,
@@ -107,6 +108,34 @@ class TestSoupHelpers(unittest.TestCase):
     def test_og_meta(self):
         self.assertEqual(og_meta(self.soup, "image"), "https://x.org/a.png")
         self.assertIsNone(og_meta(self.soup, "description"))
+
+
+class _Venue(VenueScraper):
+    name = "Venue"
+    url = "https://venue.org/events/"
+    family_friendly = True
+
+    def scrape(self):
+        return []
+
+
+class TestSourceEventId(unittest.TestCase):
+    begins = EASTERN.localize(datetime.datetime(2026, 11, 20, 19))
+
+    def finalized(self, online_address):
+        event = VenueScraper.new_event(
+            "Show", self.begins, online_address=online_address
+        )
+        _Venue(group_id=1).finalize(event)
+        return event.source_event_id
+
+    def test_event_page_identifies_the_event(self):
+        page = "https://venue.org/events/show"
+        self.assertEqual(self.finalized(page), page)
+
+    def test_listing_page_identifies_nothing(self):
+        self.assertIsNone(self.finalized("https://venue.org/events"))
+        self.assertIsNone(self.finalized(None))
 
 
 if __name__ == "__main__":

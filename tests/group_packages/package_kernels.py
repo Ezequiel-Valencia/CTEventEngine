@@ -38,11 +38,6 @@ class _Response:
         pass
 
 
-class _NeverCached:
-    def entry_already_in_cache(self, *_, **__) -> bool:
-        return False
-
-
 def scrape_kernel(
     package_name: str, group_name: str, pages: dict[str, Path]
 ) -> list[GenericEvent]:
@@ -80,7 +75,9 @@ def scrape_kernel(
             for kernel in kernels:
                 if kernel.group_name != group_name:
                     continue
-                scraper = _SCRAPERS[scraper_type](_NeverCached())  # type: ignore[arg-type]
+                # The scrapers no longer read the cache: the publisher compares
+                # every scraped event with it.
+                scraper = _SCRAPERS[scraper_type](None)  # type: ignore[arg-type]
                 groups = scraper.retrieve_from_source(kernel)
                 return [event for group in groups for event in group.events]
     raise AssertionError(f"No kernel {group_name!r} in {package_path}")
