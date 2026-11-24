@@ -90,7 +90,10 @@ def build_publishers(test_mode: bool, cache_db: SQLiteDB) -> dict[str, Publisher
         if not endpoint and not test_mode:
             logger.warning(f"{env} is not set: nothing is published to {site.value}.")
             continue
+        # The cache records each event's site under this name (the engine also
+        # passes it when routing), so an event is updated on the site it was
+        # published to.
         publishers[site.value] = MobilizonUploader(
-            test_mode, cache_db, endpoint=endpoint
+            test_mode, cache_db, endpoint=endpoint, site_name=site.value
         )
     return publishers

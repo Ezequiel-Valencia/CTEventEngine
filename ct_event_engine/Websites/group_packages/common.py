@@ -292,6 +292,8 @@ class VenueScraper(Scraper):
             event.physical_address = self.address
         if not event.description:
             event.description = f"{event.title} at {self.name}."
+        if event.source_event_id is None:
+            event.source_event_id = self.source_event_id(event)
         mobilizon: dict = {
             "groupID": self.group_id,
             "defaultCategory": self.category.name,
@@ -300,6 +302,20 @@ class VenueScraper(Scraper):
         if self.default_image_id:
             mobilizon["defaultImageID"] = self.default_image_id
         event.publisher_specific_info = {"mobilizon": mobilizon}
+
+    def source_event_id(self, event: GenericEvent) -> str | None:
+        """
+        The venue's own ID for `event`, which lets the engine update the
+        published event when its title or time change instead of publishing a
+        second one. Defaults to the event's own page; None when the event only
+        links to the listing page, since that is shared by every event. A URL
+        given to several events in one scrape (a recurring class) is dropped by
+        the engine, which then matches them by title and start time.
+        """
+        page = event.online_address
+        if not page or page.rstrip("/") == self.url.rstrip("/"):
+            return None
+        return page
 
     @staticmethod
     def new_event(

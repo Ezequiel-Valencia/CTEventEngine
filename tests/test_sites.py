@@ -126,7 +126,7 @@ class TestEngineRouting(unittest.TestCase):
             publisher.connect = mock.Mock()  # type: ignore[method-assign]
             publisher.close = mock.Mock()  # type: ignore[method-assign]
             publisher.upload = mock.Mock(  # type: ignore[method-assign]
-                side_effect=lambda batch, name=name: uploaded.setdefault(
+                side_effect=lambda batch, site=None, name=name: uploaded.setdefault(
                     name, []
                 ).extend(e.title for g in batch for e in g.events)
             )

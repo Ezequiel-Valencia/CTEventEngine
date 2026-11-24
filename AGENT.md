@@ -165,6 +165,16 @@ module's batch file `scripts/mobilizon_groups/<site>/<package>.json` and run
 `make ctgrassroots_groups` / `make underground_groups` run `--batch` on a
 site's whole folder with a single login; `make all_groups` does both).
 
+Scrapers return every upcoming event, published or not; don't filter against
+the cache. On each run the engine (≥0.6) publishes new events, updates
+published ones whose content changed and skips the rest. It recognises an event
+by `source_event_id`, falling back to its title and start time, so a changed
+title or time updates the event rather than duplicating it. `VenueScraper`
+uses the event's own page (`online_address`) as that ID; override
+`source_event_id()` when a site has a better one. Keep scraped content
+deterministic: anything that changes on every fetch (cache-busting image
+URLs, "posted 3 hours ago") republishes the event on every run.
+
 Tests replay recorded responses, so they run offline. When a site changes,
 re-record and update the spot checks in its test:
 
